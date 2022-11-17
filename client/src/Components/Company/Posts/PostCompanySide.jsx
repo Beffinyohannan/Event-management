@@ -26,7 +26,7 @@ function PostCompanySide() {
 
     const onInuputChange =(e)=>{
         // console.log( e.target.files[0]);
-        // const image = e.target.files[0]
+        
         setShowImage(URL.createObjectURL(e.target.files[0]))
         setFile(e.target.files[0])
         
@@ -71,7 +71,7 @@ function PostCompanySide() {
                     showConfirmButton: false,
                     timer: 1500
                   }).then(()=>{
-                    // window.location.href = "/"
+                  
                     setShowImage('')
                     setDescription('')
                     navigate('/company/homepage')
