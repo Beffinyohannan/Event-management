@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 const company = require('../model/company/companySchema');
+const post = require('../model/company/postSchema');
 
 
 
@@ -70,8 +71,18 @@ const viewCompanies=(req,res)=>{
     })
 }
 
+const viewPosts=(req,res)=>{
+    post.find().then((data)=>{
+        res.json(data)
+    }).catch((err)=>{
+        console.log(err.message);
+        res.json(err.message)
+    })
+}
+
 module.exports={
     signup,
     login,
-    viewCompanies
+    viewCompanies,
+    viewPosts
 }

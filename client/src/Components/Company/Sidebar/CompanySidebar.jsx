@@ -6,6 +6,8 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
 import { useCookies } from 'react-cookie'
+// import '../../../App.css'
+import './sidebar.css'
 
 function CompanySidebar() {
 

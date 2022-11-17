@@ -2,13 +2,20 @@ const mongoose = require('mongoose')
 
 
 const postSchema = mongoose.Schema({
-    name:String,
-    image:String
-    // {
-    //     data:String,
-    //     description:String,
-    //     contentType:String
-    // }
+    companyName:String,
+    companyId:mongoose.Types.ObjectId,
+    description:String,
+    image:String,
+    status:{
+        type:Boolean,
+        default:true
+    },
+    date:{
+        type:Date,
+        default:Date.now
+    }
+
+    
 })
 
 const post = mongoose.model('post',postSchema)

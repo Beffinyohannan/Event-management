@@ -5,7 +5,8 @@ const router = require('express').Router()
 
 router.post('/signup',companySignup)
 router.post('/login',companyLogin)
-router.post('/post-upload',multer.single('image'),uploadPost)
+var type = multer.single('image');
+router.post('/post-upload',type,uploadPost)
 
 
 module.exports= router 

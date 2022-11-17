@@ -5,11 +5,13 @@ const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const path = require('path')
 
 app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(cors())
+app.use('/images',express.static(path.join(__dirname,'public/images')))
 
 const userRouter = require('./routes/user')
 const adminRouter= require('./routes/admin')

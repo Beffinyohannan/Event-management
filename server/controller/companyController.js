@@ -67,20 +67,28 @@ const companyLogin=async(req,res)=>{
 
 
 const uploadPost=(req,res)=>{
+    console.log(req.body);
+    // console.log(JSON.parse(req.body));
+    console.log(req.file);
   
     const postSave= new post({
-        name:req.body.name,
-        image:fs.readFileSync("uploads/"  + req.file.filename),
+        companyName:req.body.companyName,
+        companyId:mongoose.Types.ObjectId(req.body.companyId),
+        description:req.body.description,
+        image:req.file.filename
             // contentType:"image/png"
         
     }) 
 
     postSave.save().then((response)=>{
         console.log('saved');
+        res.status(200).json({posted:true})
+        
     }).catch((err)=>{
         console.log(err.message);
+        res.json(err.message)
     })
-    res.send('saved')
+    // res.send('saved')
 }
 
 

@@ -11,6 +11,7 @@ import Userspage from './Pages/Admin/Userspage';
 import CompaniesPage from './Pages/Admin/CompaniesPage';
 import PostsPage from './Pages/Admin/PostsPage';
 import User from './Store/UserContext'
+import Company from './Store/CompanyContext';
 import CompanyLoginPage from './Pages/Company/CompanyLoginPage';
 import CompaniesListPage from './Pages/User/CompaniesListPage';
 import CompanyHomePage from './Pages/Company/CompanyHomePage';
@@ -27,12 +28,14 @@ function App() {
           <Route path='/homepage' element={<HomePage />} />
           <Route path='/companies' element={<CompaniesListPage />} />
         </Routes>
+<Company>
 
         <Routes>
           <Route path='/company/signup' element={<CompanySignupPage />} />
           <Route path='/company/login' element={<CompanyLoginPage />} />
           <Route path='/company/homepage' element={<CompanyHomePage />} />
         </Routes>
+</Company>
 
         <Routes>
           <Route path='/admin/login' element={<AdminLoginPage />} />
