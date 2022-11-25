@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiMenuAlt3, HiOutlineBell, HiOutlineCog, HiOutlineClipboardList, HiOutlineGlobeAlt, HiOutlineTable } from 'react-icons/hi'
 import { AiOutlineHome } from 'react-icons/ai'
@@ -6,6 +6,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
 import { useCookies } from 'react-cookie'
+import { UserContext } from '../../../Store/UserContext'
 
 function Sidebar() {
     const Menus = [
@@ -21,6 +22,9 @@ function Sidebar() {
 
     const [cookies, setCookie, removeCookie] = useCookies('');
     const navigate = useNavigate()
+    const {userDetails,setUserDetails}=useContext(UserContext)
+
+
 
     const logout = (() => {
         console.log('gfdghsfgdfjgjhkj');
@@ -35,6 +39,9 @@ function Sidebar() {
                     label: 'Yes',
                     onClick: () => {
                         removeCookie("token")
+                        localStorage.removeItem('token')
+                        localStorage.removeItem('user')
+                        // setUserDetails('')
                         //    navigate("/admin-login")
                         Swal.fire({
                             position: 'top-end',
@@ -57,7 +64,7 @@ function Sidebar() {
     })
 
     return (
-        <div className={`bg-slate-100 min-h-screen ${open ? 'w-72' : 'w-16'} duration-500  text-black px-4 hidden md:block fixed `}>
+        <div className={`bg-slate-100 min-h-screen ${open ? 'w-72' : 'w-16'} duration-500  text-black px-4 hidden md:w-40 lg:w-72 md:block fixed border `}>
             <div className='flex justify-between'>
                 <div>
                     <img className={`whitespace-pre duration-500  ${!open && 'hidden '} `} src="https://imgs.search.brave.com/BgRuRD-2-DzB2DshFR9kH3yUajnrNb5ym7t3Y3nOKeA/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzE0NTIzNC9p/c29sYXRlZC9wcmV2/aWV3LzkzMWNkMjYx/YWQ3OGQwYzRmMGIy/Y2VkYTg5M2UxNDJi/LWV2ZW50LXBsYW5u/aW5nLWxvZ290eXBl/LWJ5LXZleGVscy5w/bmc" alt="" width={80} height={80} layout='fixed' />

@@ -15,7 +15,7 @@ function CompanyHomePage() {
                 <CompanySidebar />
             </div>
             {/* <CompanyFeed/> */}
-            <div className='flex w-full  justify-center'>
+            <div className='flex w-full  justify-center '>
                 <PostCompanySide />
             </div>
              <Rightbar />

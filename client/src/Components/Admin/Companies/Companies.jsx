@@ -256,16 +256,26 @@ function Companies() {
                                                 </p>
                                             </td>
 
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <span
-                                                    class="relative inline-block  py-1 font-semibold text-green-900 leading-tight">
-                                                    <span aria-hidden
-                                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                                    <span class="relative">
-                                                        {obj.status}
+                                            <td class="px-3 py-5 border-b border-gray-200 bg-white text-sm">
+                                            {obj.status == 'Active' ? <span
+                                                            class="relative inline-block px-1 py-1 font-semibold text-green-900 leading-tight">
+                                                            <span aria-hidden
+                                                                class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                            <span class="relative">
+                                                                {obj.status}
 
-                                                    </span>
-                                                </span>
+                                                            </span>
+                                                        </span>
+                                                            :  <span
+                                                                class="relative inline-block px-1  py-1 font-semibold text-slate-900 leading-tight">
+                                                                <span aria-hidden
+                                                                    class="absolute inset-0 bg-slate-400 opacity-50 rounded-full"></span>
+                                                                <span class="relative">
+                                                                    {obj.status}
+
+                                                                </span>
+                                                            </span>
+                                                        }
                                             </td>
                                             <td className='flex m-5'>
                                                 {obj.status == "Active" ?

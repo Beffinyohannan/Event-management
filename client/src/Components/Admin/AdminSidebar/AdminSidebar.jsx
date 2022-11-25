@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { HiMenuAlt3, HiOutlineBell, HiOutlineCog, HiOutlineClipboardList, HiOutlineGlobeAlt, HiOutlineTable,HiUserCircle } from 'react-icons/hi'
+import { Link,useNavigate } from 'react-router-dom'
+import { HiMenuAlt3, HiOutlineBell, HiOutlineCog, HiOutlineClipboardList, HiOutlineGlobeAlt, HiOutlineTable, HiUserCircle } from 'react-icons/hi'
 import { AiOutlineHome } from 'react-icons/ai'
+
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import Swal from 'sweetalert2'
+import { useCookies } from 'react-cookie'
+import { useAuth } from '../../../Store/AuthContext'
 
 function AdminSidebar() {
 
@@ -15,6 +21,48 @@ function AdminSidebar() {
     ]
 
     const [open, setOpen] = useState(true)
+    const navigate = useNavigate()
+    const [cookies, setCookie, removeCookie] = useCookies('');
+   const auth = useAuth()
+
+
+
+    const logout = (() => {
+        console.log('gfdghsfgdfjgjhkj');
+        // removeCookie("admin-token")
+        // alert('Logout Sucessfully')
+        // window.location.href="/admin-login"
+
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure to Logout.',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        auth.logout()
+                        removeCookie("admin-token")
+                        window.localStorage.removeItem('admin-token')
+                        //    navigate("/admin-login")
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'You are successfully logged out',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            navigate('/admin/login')
+                        })
+                    }
+                },
+                {
+                    label: 'No',
+                    // onClick: () => alert('Click No')
+                }
+            ]
+        });
+
+    })
 
     return (
         <div className={`bg-black min-h-screen ${open ? 'w-80' : 'w-16'} duration-500  text-white px-4 flex flex-col justify-between `}>
@@ -45,9 +93,16 @@ function AdminSidebar() {
                         ))
                     }
                 </div>
+                <button
+                    class="flex items-center justify-between w-full mt-4 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-900 border border-transparent rounded-lg active:bg-green-700 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
+                    onClick={logout}
+                >
+                    Logout
+                    {/* <span class="ml-2" aria-hidden="true">+</span> */}
+                </button>
             </div>
             <div className='m-5 flex'>
-                <HiUserCircle size={28}/>
+                <HiUserCircle size={28} />
                 <h1 className='ml-3'>profile</h1>
             </div>
         </div>

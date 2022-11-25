@@ -1,11 +1,17 @@
-import {createContext,useState} from 'react'
+import {createContext,useEffect,useState} from 'react'
 
 export const  UserContext = createContext('')
 
 function User({children})
 {
 
-const [userDetails,setUserDetails] = useState('')
+    const defaultUser = JSON.parse(localStorage.getItem('user'))
+
+const [userDetails,setUserDetails] = useState(defaultUser)
+// useEffect(()=>{
+//     setUserDetails(defaultUser)
+// },[])
+console.log(userDetails,'+++++++++++++++++++++++++++++++++++');
 
 return(
     <UserContext.Provider value={{userDetails,setUserDetails}}>

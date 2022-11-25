@@ -16,3 +16,7 @@
   opacity: 0;
   animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
 }
+
+/* ::-webkit-scrollbar{
+  display: none;
+} */

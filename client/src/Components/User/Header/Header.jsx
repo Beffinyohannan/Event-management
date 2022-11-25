@@ -1,11 +1,16 @@
 import React,{useContext} from 'react'
+import { useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa'
 import { TfiBell } from "react-icons/tfi";
 import { UserContext } from '../../../Store/UserContext';
 
 function Header() {
     const {userDetails,setUserDetails}=useContext(UserContext)
-
+    console.log(userDetails,'//////////////////////////');
+    useEffect(()=>{
+        console.log(userDetails,',,,,,,,,,,,,,,,,,,,,,,,,,,,,');
+    },[])
+   
     return (
         <div className='bg-slate-100 fixed inset-x-0 top-0 z-10 border-b-2 border-slate-200'>
 

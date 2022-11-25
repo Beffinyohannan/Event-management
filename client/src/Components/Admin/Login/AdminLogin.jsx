@@ -4,6 +4,9 @@ import Swal from 'sweetalert2'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import { useAuth } from '../../../Store/AuthContext';
+
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 
 
@@ -12,6 +15,9 @@ function AdminLogin() {
     const initialValues={email:"",password:""}
     const [formValues, setFormValues] = useState(initialValues)
     const navigate = useNavigate()
+    const auth =useAuth()
+
+    // const {dispatch} = useAuthContext()
 
 
     const [cookies, setCookie] = useCookies(['admin']);
@@ -42,14 +48,16 @@ function AdminLogin() {
         console.log(Object.keys(errors).length, 'llkklk');
         if (Object.keys(errors).length == 0) {
             console.log("hello");
-
+            auth.login(signupData)
 
             axios.post('http://localhost:5000/admin/login', { ...formValues }).then((response) => {
                 console.log(response);
                 if (response.data.state == "ok") {
                     // alert("login sucessful")
                     setCookie('admin-token', response.data.data, { path: '/' });
-                    //  window.localStorage.setItem("token",response.data.data)
+                     window.localStorage.setItem("admin-token",response.data.data)
+
+                    //  dispatch({type:'LOGIN',payload:response.data.data})
                    
                     Swal.fire({
                         position: 'top-end',
@@ -59,7 +67,7 @@ function AdminLogin() {
                         timer: 1500
                       }).then(()=>{
                         // window.location.href = "/admin-dashboard"
-                        navigate("/admin/dashboard")
+                        navigate("/admin/dashboard" ,{replace:true})
                       })
                 }
             })

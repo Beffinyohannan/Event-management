@@ -45,13 +45,14 @@ function Login() {
             axios.post('http://localhost:5000/login',{...formValues}).then((response)=>{
                 // console.log(response.data.user);
               const   userr=response.data.user
-              JSON.stringify(userr)
+              // JSON.stringify(userr)
                 if (response.data.state=="ok") {
                     // alert("login sucessful")
                     setCookie('token', response.data.data, { path: '/' });
-                    setUserDetails(userr)
-                    console.log(userDetails);
-                  //  window.localStorage.setItem("token",response.data.data)
+                    // setUserDetails(userr)
+                    // console.log(userDetails);
+                    window.localStorage.setItem("token",response.data.data)
+                    window.localStorage.setItem("user",JSON.stringify(userr))
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',

@@ -2,7 +2,7 @@ import React, { useState,useEffect,useContext } from 'react'
 import feedImage from '../../../assets/stone.webp'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import { Link,useNavigate } from 'react-router-dom'
+import { json, Link,useNavigate } from 'react-router-dom'
 import { HiPhotograph } from "react-icons/hi";
 
 import { AiOutlineHeart, AiOutlinePlus, AiFillHeart } from 'react-icons/ai'
@@ -23,6 +23,9 @@ function PostCompanySide() {
     const navigate = useNavigate()
     const {companyDetails,setCompanyDetails} =useContext(CompanyContext)
 
+    const comp =   JSON.parse(localStorage.getItem('company'))
+     console.log(comp,'mmmmmmmmmmmmmm');
+
 
     const onInuputChange =(e)=>{
         // console.log( e.target.files[0]);
@@ -31,6 +34,7 @@ function PostCompanySide() {
         setFile(e.target.files[0])
         
         console.log(file);
+        
     }
     
 
@@ -41,6 +45,8 @@ function PostCompanySide() {
         // const postDetails ={
         //     // userId:userData._id,
         //     descriptions:description
+     
+        
             
         //  }
         //  console.log(description);

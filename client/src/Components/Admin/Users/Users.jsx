@@ -3,24 +3,37 @@ import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
+import Auth from '../../../Auth/Auth';
+import { useNavigate } from 'react-router-dom'
 
 function Users() {
 
     const [state, setState] = useState([])
     const [block, setBlock] = useState(false)
+    const navigate = useNavigate()
 
 
     useEffect(() => {
-        axios.get("http://localhost:5000/admin/users").then((response) => {
-            // console.log(response.data);
-            const { data } = response
-            if (response.data) {
-                setState(data)
-                // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+        console.log('useeffect');
+        Auth().then((response) => {
+            console.log(response.data);
+            if (response.data.verified) {
 
+                axios.get("http://localhost:5000/admin/users").then((response) => {
+                    // console.log(response.data);
+                    const { data } = response
+                    if (response.data) {
+                        setState(data)
+                        // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+
+                    }
+                }).catch((error) => {
+                    console.log(error.message);
+                })
+            } else {
+                navigate('/admin/login')
             }
-        }).catch((error) => {
-            console.log(error.message);
+
         })
     }, [block])
 
@@ -237,8 +250,8 @@ function Users() {
                                                     </td>
 
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <span
-                                                            class="relative inline-block  py-1 font-semibold text-green-900 leading-tight">
+                                                        {obj.status == 'Active' ? <span
+                                                            class="relative inline-block px-1 py-1 font-semibold text-green-900 leading-tight">
                                                             <span aria-hidden
                                                                 class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                                             <span class="relative">
@@ -246,6 +259,16 @@ function Users() {
 
                                                             </span>
                                                         </span>
+                                                            :  <span
+                                                                class="relative inline-block px-1  py-1 font-semibold text-slate-900 leading-tight">
+                                                                <span aria-hidden
+                                                                    class="absolute inset-0 bg-slate-400 opacity-50 rounded-full"></span>
+                                                                <span class="relative">
+                                                                    {obj.status}
+
+                                                                </span>
+                                                            </span>
+                                                        }
                                                     </td>
                                                     <td className='flex m-5'>
                                                         {obj.status == "Active" ?

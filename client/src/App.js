@@ -1,4 +1,5 @@
 import './App.css';
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LoginPage from './Pages/User/LoginPage';
 import UserSignupPage from './Pages/User/UserSignupPage';
@@ -15,37 +16,60 @@ import Company from './Store/CompanyContext';
 import CompanyLoginPage from './Pages/Company/CompanyLoginPage';
 import CompaniesListPage from './Pages/User/CompaniesListPage';
 import CompanyHomePage from './Pages/Company/CompanyHomePage';
+import { AuthProvider } from './Store/AuthContext';
+import { RequireAuth } from './Components/Admin/RequireAuth';
+import ProtectedRoute from './Auth/ProtectedRoute';
+import ProfilePage from './Pages/User/ProfilePage';
 
 function App() {
+
+
   return (
-    <User>
 
-      <Router>
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/signup' element={<UserSignupPage />} />
-          <Route path='/homepage' element={<HomePage />} />
-          <Route path='/companies' element={<CompaniesListPage />} />
-        </Routes>
-<Company>
+   <AuthProvider> 
 
-        <Routes>
-          <Route path='/company/signup' element={<CompanySignupPage />} />
-          <Route path='/company/login' element={<CompanyLoginPage />} />
-          <Route path='/company/homepage' element={<CompanyHomePage />} />
-        </Routes>
-</Company>
 
-        <Routes>
-          <Route path='/admin/login' element={<AdminLoginPage />} />
-          <Route path='/admin/dashboard' element={<DashbaordPage />} />
-          <Route path='/admin/users' element={<Userspage />} />
-          <Route path='/admin/companies' element={<CompaniesPage />} />
-          <Route path='/admin/posts' element={<PostsPage />} />
-        </Routes>
-      </Router>
-    </User>
+      <User>
+
+        <Router>
+          <Routes>
+
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/signup' element={<UserSignupPage />} />
+            <Route path='/homepage' element={<HomePage />} />
+            <Route path='/companies' element={<CompaniesListPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
+            
+          </Routes>
+          <Company>
+
+            <Routes>
+              <Route path='/company/signup' element={<CompanySignupPage />} />
+              <Route path='/company/login' element={<CompanyLoginPage />} />
+              <Route path='/company/homepage' element={<CompanyHomePage />} />
+            </Routes>
+          </Company>
+
+          <Routes>
+            <Route path='/admin/login' element={<AdminLoginPage />} />
+          
+
+            <Route path='/admin/dashboard' element={<DashbaordPage />} />
+            <Route path='/admin/users' element={<Userspage />} />
+            <Route path='/admin/companies' element={<CompaniesPage />} />
+            {/* <ProtectedRoute path='/admin/companies' component={<CompaniesPage/>} auth={true} /> */}
+            <Route path='/admin/posts' element={ 
+              // <RequireAuth>
+                <PostsPage />
+              //  </RequireAuth>
+             } />
+           
+          </Routes>
+        </Router>
+      </User>
+
+    </AuthProvider>
   );
 }
 

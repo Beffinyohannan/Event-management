@@ -73,7 +73,8 @@ const uploadPost=(req,res)=>{
   
     const postSave= new post({
         companyName:req.body.companyName,
-        companyId:mongoose.Types.ObjectId(req.body.companyId),
+        // companyId:mongoose.Types.ObjectId(req.body.companyId),
+        companyId:req.body.companyId,
         description:req.body.description,
         image:req.file.filename
             // contentType:"image/png"

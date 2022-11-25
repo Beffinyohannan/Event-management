@@ -48,14 +48,14 @@ function CompanyLogin() {
             axios.post('http://localhost:5000/company/login',{...formValues}).then((response)=>{
                 // console.log(response.data.user);
               const   companies=response.data.companies
-              JSON.stringify(companies)
+              // JSON.stringify(companies)
                 if (response.data.state=="ok") {
                     // alert("login sucessful")
                     setCookie('company-token', response.data.data, { path: '/' });
                     // setUserDetails(userr)
                     setCompanyDetails(companies)
                     // console.log(userDetails);
-                  //  window.localStorage.setItem("token",response.data.data)
+                   window.localStorage.setItem("company",JSON.stringify(companies))
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
