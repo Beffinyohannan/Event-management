@@ -87,8 +87,10 @@ function CompanySignup() {
     <div>
     <div className='w-full h-screen flex'>
     <div className='grid grid-cols-1 md:grid-cols-2 m-auto h-[650px] shadow-lg shadow-gray-600 sm:max-w-[900px]'>
-      <div className=' w-full h-[650px] hidden md:block'>
-        <img className='w-full h-full' src={landingImg} alt="" />
+      <div className=' w-full text-center  h-[650px] hidden md:block' style={{ backgroundImage: `url(${landingImg})` }}>
+        {/* <img className='w-full h-full' src={landingImg} alt="" /> */}
+        <h1 className='text-5xl m-5 pt-52   font-bold  text-slate-200'>Eventive</h1>
+          <p className='text-slate-100 font-bold'>Have a opertunity to being ourself.</p>
       </div>
       <div className='p-4   flex flex-col justify-around items-center'>
         <form className='w-3/4 mt-4 ' onSubmit={handleSubmit}>

@@ -107,7 +107,7 @@ function Login() {
       <div className='grid grid-cols-1 md:grid-cols-2 m-auto h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px] '>
         <div className=' w-full h-[550px] text-center hidden md:block' style={{ backgroundImage: `url(${landingImg})` }}>
           {/* <img className='w-full h-full' src={landingImg} alt="" /> */}
-          <h1 className='text-5xl m-5 pt-32  font-bold  text-slate-200'>Eventive</h1>
+          <h1 className='text-5xl m-5 pt-40  font-bold  text-slate-200'>Eventive</h1>
           <p className='text-slate-100 font-bold'>Find The Perfect Event...</p>
         </div>
         <div className='p-4  flex flex-col justify-around items-center w-96'>
