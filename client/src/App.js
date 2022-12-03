@@ -20,6 +20,11 @@ import { AuthProvider } from './Store/AuthContext';
 import { RequireAuth } from './Components/Admin/RequireAuth';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import ProfilePage from './Pages/User/ProfilePage';
+import EnquireFormPage from './Pages/User/EnquireFormPage';
+import InboxPage from './Pages/User/InboxPage';
+import InboxCompanyPage from './Pages/Company/InboxCompanyPage';
+import ProfileCompanyPage from './Pages/Company/ProfileCompanyPage';
+import ChatPage from './Pages/User/ChatPage';
 
 function App() {
 
@@ -40,6 +45,9 @@ function App() {
             <Route path='/homepage' element={<HomePage />} />
             <Route path='/companies' element={<CompaniesListPage />} />
             <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/enquire-form' element={<EnquireFormPage />} />
+            <Route path='/inbox' element={<InboxPage />} />
+            <Route path='/chat' element={<ChatPage />} />
             
           </Routes>
           <Company>
@@ -48,6 +56,8 @@ function App() {
               <Route path='/company/signup' element={<CompanySignupPage />} />
               <Route path='/company/login' element={<CompanyLoginPage />} />
               <Route path='/company/homepage' element={<CompanyHomePage />} />
+              <Route path='/company/inbox' element={<InboxCompanyPage />} />
+              <Route path='/company/profile' element={<ProfileCompanyPage />} />
             </Routes>
           </Company>
 

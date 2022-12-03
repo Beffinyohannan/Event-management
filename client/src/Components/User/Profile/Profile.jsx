@@ -1,9 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import axios from '../../../api/axios';
 import { UserContext } from '../../../Store/UserContext'
 
 function Profile() {
 
     const { userDetails, setUserDetails } = useContext(UserContext)
+    console.log(userDetails,1223123);
+  const   userId = userDetails._id
+    useEffect(()=>{
+        axios.get(`/profile/${userId}`).then((res)=>{
+            console.log(res.data,'gggggggggggggg');
+            setUserDetails(res.data)
+        })
+    },[])
 
 
     return (
@@ -33,7 +42,7 @@ function Profile() {
                                     <div className="flex justify-center py-4 lg:pt-4 pt-8">
                                         <div className=" text-center">
                                             <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                                                22
+                                               {userDetails.following.length}
                                             </span>
                                             <span className="text-sm text-blueGray-400">Following</span>
                                         </div>

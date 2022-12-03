@@ -11,11 +11,11 @@ import { UserContext } from '../../../Store/UserContext'
 function Sidebar() {
     const Menus = [
         { name: 'Home', link: '/homepage', icon: AiOutlineHome },
-        { name: 'Notification', link: '#', icon: HiOutlineBell },
+        { name: 'Inbox', link: '/inbox', icon: HiOutlineBell },
         { name: 'Companies', link: '/companies', icon: HiOutlineGlobeAlt },
         { name: 'Events', link: '#', icon: HiOutlineTable },
         { name: 'Settings', link: '#', icon: HiOutlineCog },
-        { name: 'Enquire Event', link: '#', icon: HiOutlineClipboardList },
+        { name: 'Enquire Event', link: '/enquire-form', icon: HiOutlineClipboardList },
     ]
 
     const [open, setOpen] = useState(true)

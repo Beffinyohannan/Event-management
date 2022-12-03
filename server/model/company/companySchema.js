@@ -41,6 +41,10 @@ const companySchema = mongoose.Schema({
     status:{
         type:String,
         default:"Active"
+    },
+    followers:{
+        type:Array,
+        default:[]
     }
 })
 

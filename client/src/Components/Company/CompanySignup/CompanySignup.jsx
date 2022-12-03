@@ -37,7 +37,7 @@ function CompanySignup() {
             console.log(response);
             if(response.data.insert==true){
 
-                navigate('/login')
+                navigate('/company/login')
             }
           })
       }

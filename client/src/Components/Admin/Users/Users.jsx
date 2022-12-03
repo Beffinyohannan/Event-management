@@ -15,9 +15,9 @@ function Users() {
 
     useEffect(() => {
         console.log('useeffect');
-        Auth().then((response) => {
-            console.log(response.data);
-            if (response.data.verified) {
+        // Auth().then((response) => {
+        //     console.log(response.data);
+        //     if (response.data.verified) {
 
                 axios.get("http://localhost:5000/admin/users").then((response) => {
                     // console.log(response.data);
@@ -30,11 +30,12 @@ function Users() {
                 }).catch((error) => {
                     console.log(error.message);
                 })
-            } else {
-                navigate('/admin/login')
-            }
 
-        })
+        //     } else {
+        //         navigate('/admin/login')
+        //     }
+
+        // })
     }, [block])
 
     const blockUser = (id) => {

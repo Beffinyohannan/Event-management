@@ -12,10 +12,10 @@ import './sidebar.css'
 function CompanySidebar() {
 
     const Menus = [
-        { name: 'Home', link: '/homepage', icon: AiOutlineHome },
-        { name: 'Notification', link: '#', icon: HiOutlineBell },
+        { name: 'Home', link: '/company/homepage', icon: AiOutlineHome },
+        { name: 'Inbox', link: '/company/inbox', icon: HiOutlineBell },
         // {name:'Add Post',link:'/companies',icon:HiOutlineGlobeAlt},
-        { name: 'Profile', link: '#', icon: HiUserCircle },
+        { name: 'Profile', link: '/company/profile', icon: HiUserCircle },
         { name: 'Settings', link: '#', icon: HiOutlineCog },
         // {name:'Logout',link:'',icon:HiLogout},
         // {name:'Enquire Event',link:'#',icon:HiOutlineClipboardList},
@@ -61,7 +61,7 @@ function CompanySidebar() {
     })
 
     return (
-        <div className={`bg-slate-100 min-h-screen ${open ? 'w-72' : 'w-16'} duration-500  text-black px-4 hidden    fixed lg:block `}>
+        <div className={`bg-slate-100 min-h-screen ${open ? 'w-72' : 'w-16'} duration-500  text-black px-4 hidden  md:w-40 lg:w-72 md:block fixed border `}>
             <div className='flex justify-between'>
                 <div>
                     <img className={`whitespace-pre duration-500  ${!open && 'hidden '} `} src="https://imgs.search.brave.com/BgRuRD-2-DzB2DshFR9kH3yUajnrNb5ym7t3Y3nOKeA/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzE0NTIzNC9p/c29sYXRlZC9wcmV2/aWV3LzkzMWNkMjYx/YWQ3OGQwYzRmMGIy/Y2VkYTg5M2UxNDJi/LWV2ZW50LXBsYW5u/aW5nLWxvZ290eXBl/LWJ5LXZleGVscy5w/bmc" alt="" width={80} height={80} layout='fixed' />

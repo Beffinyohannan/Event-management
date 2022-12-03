@@ -115,10 +115,6 @@ const validateForm = (data) => {
 return (
     <div className=' sm:w-full  lg:w-10/12  flex flex-col items-center xl:items-start  '>
 
-        {/* {
-                posts.map((obj, index) => {
-                    return ( */}
-
         <div className='flex flex-col items-center lg:pl-12 xl:pl-0 xl:pr-28'>
             <div className='flex flex-col mt-3    w-full md:w-4/5 lg:w-9/12 xl:w-4/6 border rounded-2xl '>
                 <div className='p-5 bg-white   rounded-t-2xl border-slate-200 border-t shadow-md'>
@@ -215,12 +211,7 @@ return (
                 }
             </div>
         </div>
-        {/* 
-                    )
-                })
-            } */}
-
-
+    
     </div>
 
 

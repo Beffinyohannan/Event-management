@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 const company = require('../model/company/companySchema');
 const post = require('../model/company/postSchema');
+const Enquire = require('../model/user/eventEnquire')
 
 
 /* ------------------------------- user signup ------------------------------ */
@@ -124,11 +125,11 @@ const likePost = async (req, res) => {
 
 const commentPost = async (req, res) => {
     console.log(req.body);
-    const comment ={
-        comment:req.body.comment,
-        postedBy :req.body.postBy,
-        name:req.body.username
-    } 
+    const comment = {
+        comment: req.body.comment,
+        postedBy: req.body.postBy,
+        name: req.body.username
+    }
     //    const cmt = req.body 
     try {
         const data = await post.findByIdAndUpdate({ _id: req.params.id },
@@ -145,17 +146,96 @@ const commentPost = async (req, res) => {
     }
 }
 
-const uncommentPost = (req, res)=>{
+const uncommentPost = (req, res) => {
 
 }
 
-const viewComments=async(req,res)=>{
+const viewComments = async (req, res) => {
     try {
-      const comment =await post.find({_id:req.params.id})
-      res.status(200).json(comment)
+        const comment = await post.find({ _id: req.params.id })
+        res.status(200).json(comment)
     } catch (err) {
         console.log(err.message);
         res.json(err.message)
+    }
+}
+
+const follow = async (req, res) => {
+    try {
+        console.log(req.params.id, '11111');
+        console.log(req.body.id, '222222');
+        const user = await User.findById({ _id: req.params.id })
+        const userToFollow = await company.findById({ _id: req.body.id })
+        console.log(user, '33333333');
+        console.log(userToFollow, '444444');
+        if (!user.following.includes(req.body.id)) {
+            console.log('iffffffffffff');
+            await user.updateOne({ $push: { following: req.body.id } });
+            await userToFollow.updateOne({ $push: { followers: req.params.id } })
+            res.status(200).json('Followed')
+        } else if (user.following.includes(req.body.id)) {
+            console.log('elseiffffffff');
+            await user.updateOne({ $pull: { following: req.body.id } });
+            await userToFollow.updateOne({ $pull: { followers: req.params.id } })
+            res.status(200).json('Unfollowed')
+        } else {
+            res.status(403).json('You already follows this user')
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.json(err.message)
+    }
+}
+
+const getProfile = async (req, res) => {
+    const user = await User.findById({ _id: req.params.id })
+    res.status(200).json(user)
+}
+
+const eventEnquire = async (req, res) => {
+    try {
+        console.log(req.query);
+        console.log(req.body);
+       
+        const companyId = req.body.com
+        console.log(companyId,'///////////////');
+        
+       
+        let { name, email, phone,eventDate,guestNumber,budget,eventType,address,food,venue,programme,light,guest,camera,anchor,other,notes } = req.body
+        const userId = req.query.userId
+        // const companyId = req.query.companyId
+        const eventEnquire = await new Enquire({
+            name, email, phone,eventDate,guestNumber,budget,eventType,address,food,venue,programme,light,guest,camera,anchor,other,notes,userId,companyId
+        })
+        await eventEnquire.save()
+        console.log('success');
+        res.status(200).json({ form: 'sended' })
+    } catch (err) {
+        console.log(err.message);
+        res.json(err.message)
+    }
+}
+
+const inboxView=async(req,res)=>{
+    try {
+       const msg= await Enquire.find({userId:req.params.id}).populate('companyId')
+       res.status(200).json(msg)
+    } catch (err) {
+        console.log(err.message);
+        res.json(err.message) 
+    }
+}
+
+const cancelEnquiry =async(req,res)=>{
+    try {
+        const result = await Enquire.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: 'cancelled' } })
+        if (result) {
+            res.status(200).json({ update: true })
+        }
+
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
     }
 }
 
@@ -167,5 +247,11 @@ module.exports = {
     likePost,
     commentPost,
     uncommentPost,
-    viewComments
+    viewComments,
+    follow,
+    getProfile,
+    eventEnquire,
+    inboxView,
+    cancelEnquiry
+
 }

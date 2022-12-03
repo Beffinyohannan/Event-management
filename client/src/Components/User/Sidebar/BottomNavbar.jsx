@@ -7,14 +7,14 @@ function BottomNavbar() {
 
     const Menus=[
         {name:'Settings',link:'#',icon:HiOutlineCog,dis:"translate-x-64"},
-        {name:'Enquire',link:'',icon:HiOutlineClipboardList,dis:"translate-x-82"},
-        {name:'Company',link:'#',icon:HiOutlineGlobeAlt,dis:"translate-x-32"},
-        {name:'Home',link:'#',icon:AiOutlineHome,dis:"translate-x-0"},
+        {name:'Enquire',link:'/enquire-form',icon:HiOutlineClipboardList,dis:"translate-x-82"},
+        {name:'Company',link:'/companies',icon:HiOutlineGlobeAlt,dis:"translate-x-32"},
+        {name:'Home',link:'/homepage',icon:AiOutlineHome,dis:"translate-x-0"},
         {name:'Events',link:'#',icon:HiOutlineTable,dis:"translate-x-48"},
-        {name:'Notification',link:'#',icon:HiOutlineBell,dis:"translate-x-16"},
+        {name:'Notification',link:'/inbox',icon:HiOutlineBell,dis:"translate-x-16"},
     ]
 
-    const [active,setActive]=useState(0)
+    const [active,setActive]=useState()
 
   return (
     <div className='bg-slate-100 max-h-[4.4rem] px-6 pb-5 rounded-t-xl md:hidden fixed inset-x-0 bottom-0'>

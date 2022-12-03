@@ -5,7 +5,9 @@ export const  CompanyContext = createContext('')
 function Company({children})
 {
 
-const [companyDetails,setCompanyDetails] = useState('')
+    const defaultCompany = JSON.parse(localStorage.getItem('company'))
+
+const [companyDetails,setCompanyDetails] = useState(defaultCompany)
 
 return(
     <CompanyContext.Provider value={{companyDetails,setCompanyDetails}}>

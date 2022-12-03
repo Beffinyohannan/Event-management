@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa'
 import { TfiBell } from "react-icons/tfi";
 import { UserContext } from '../../../Store/UserContext';
+import { Link } from 'react-router-dom';
 
 function Header() {
     const {userDetails,setUserDetails}=useContext(UserContext)
@@ -29,7 +30,9 @@ function Header() {
                             <div className='flex items-center space-x-2'>
                                 <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={40} height={40} alt="" />
                                 <div>
-                                    <p className='font-medium'>{userDetails.username}</p>
+                                    <Link to={'/profile'} className='font-medium'>
+                                    {userDetails.username}
+                                    </Link>
                                 </div>
                         </div>
                     </div>
