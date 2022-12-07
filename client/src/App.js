@@ -24,7 +24,8 @@ import EnquireFormPage from './Pages/User/EnquireFormPage';
 import InboxPage from './Pages/User/InboxPage';
 import InboxCompanyPage from './Pages/Company/InboxCompanyPage';
 import ProfileCompanyPage from './Pages/Company/ProfileCompanyPage';
-import ChatPage from './Pages/User/ChatPage';
+import ChatPage from './Pages/Chat/ChatPage';
+import ChatCompanyPage from './Pages/Chat/ChatCompanyPage';
 
 function App() {
 
@@ -47,7 +48,6 @@ function App() {
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/enquire-form' element={<EnquireFormPage />} />
             <Route path='/inbox' element={<InboxPage />} />
-            <Route path='/chat' element={<ChatPage />} />
             
           </Routes>
           <Company>
@@ -58,6 +58,7 @@ function App() {
               <Route path='/company/homepage' element={<CompanyHomePage />} />
               <Route path='/company/inbox' element={<InboxCompanyPage />} />
               <Route path='/company/profile' element={<ProfileCompanyPage />} />
+              <Route path='/company/chat' element={<ChatCompanyPage />} />
             </Routes>
           </Company>
 
@@ -75,6 +76,11 @@ function App() {
               //  </RequireAuth>
              } />
            
+          </Routes>
+
+          <Routes>
+          <Route path='/chat' element={<ChatPage />} />
+
           </Routes>
         </Router>
       </User>

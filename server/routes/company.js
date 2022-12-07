@@ -1,4 +1,4 @@
-const { companySignup, companyLogin, uploadPost, inboxView, acceptForm, rejectFrom, getCompanyProfile, getProfilePost, quotation } = require('../controller/companyController')
+const { companySignup, companyLogin, uploadPost, inboxView, acceptForm, rejectFrom, getCompanyProfile, getProfilePost, quotation, getCompany } = require('../controller/companyController')
 const multer = require('../helper/multer')
 
 const router = require('express').Router()
@@ -14,6 +14,8 @@ router.put('/reject-form/:id',rejectFrom)
 router.get('/profile/:id',getCompanyProfile)
 router.get('/profile-post/:id',getProfilePost)
 router.post('/eventQuotation',quotation)
+
+router.get('/:id',getCompany)
 
 
 module.exports= router 

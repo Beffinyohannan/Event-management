@@ -11,7 +11,7 @@ const [userDetails,setUserDetails] = useState(defaultUser)
 // useEffect(()=>{
 //     setUserDetails(defaultUser)
 // },[])
-console.log(userDetails,'+++++++++++++++++++++++++++++++++++');
+// console.log(userDetails,'+++++++++++++++++++++++++++++++++++');
 
 return(
     <UserContext.Provider value={{userDetails,setUserDetails}}>

@@ -8,7 +8,7 @@ function Landing() {
 
         <div>
             <div className="flex justify-between  border">
-                <h2 className="m-3 font-bold text-2xl md:text-4xl text-black-400">Event</h2>
+                <h2 className="m-3 font-bold text-2xl md:text-4xl text-black-400">Eventive</h2>
                 <Link to={'/login'}>
                     <button type="button"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium m-3

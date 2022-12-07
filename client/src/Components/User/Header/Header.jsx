@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     const {userDetails,setUserDetails}=useContext(UserContext)
-    console.log(userDetails,'//////////////////////////');
+    // console.log(userDetails,'//////////////////////////');
     useEffect(()=>{
-        console.log(userDetails,',,,,,,,,,,,,,,,,,,,,,,,,,,,,');
+        // console.log(userDetails,',,,,,,,,,,,,,,,,,,,,,,,,,,,,');
     },[])
    
     return (

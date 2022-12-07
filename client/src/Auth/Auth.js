@@ -3,7 +3,7 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
 const jwt = window.localStorage.getItem('admin-token')
-console.log(jwt,'eeeeeeeeeeeeeeeeeee');
+// console.log(jwt,'eeeeeeeeeeeeeeeeeee');
 
 async function Auth() {
 

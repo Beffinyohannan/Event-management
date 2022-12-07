@@ -16,11 +16,15 @@ app.use('/images',express.static(path.join(__dirname,'public/images')))
 const userRouter = require('./routes/user')
 const adminRouter= require('./routes/admin')
 const companyRouter = require('./routes/company')
+const chatRouter = require('./routes/chatRoute')
+const messageRouter = require('./routes/messageRoute')
 
 
 app.use('/',userRouter)
 app.use('/admin',adminRouter)
 app.use('/company',companyRouter)
+app.use('/chat',chatRouter)
+app.use('/message',messageRouter)
 
 
 const {connectDb}=require('./config/connection')

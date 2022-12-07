@@ -239,6 +239,17 @@ const cancelEnquiry =async(req,res)=>{
     }
 }
 
+const getUserDetail =async(req,res)=>{
+    try {
+        const id = req.params.id
+        const user = await User.findOne({_id:id})
+        res.status(200).json(user)
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    }
+}
+
 module.exports = {
     signup,
     login,
@@ -252,6 +263,7 @@ module.exports = {
     getProfile,
     eventEnquire,
     inboxView,
-    cancelEnquiry
+    cancelEnquiry,
+    getUserDetail
 
 }

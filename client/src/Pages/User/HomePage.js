@@ -8,12 +8,6 @@ import Sidebar from '../../Components/User/Sidebar/Sidebar'
 import axios from '../../api/axios'
 
 function HomePage() {
-//   useEffect((e) => {
-//     axios.get('/viewPosts').then((response) => {
-//         console.log(response.data);
-//         setPosts(response.data)
-//     })
-// }, [])
 
   return (
     <div >
@@ -21,8 +15,6 @@ function HomePage() {
         <Sidebar />
         <div className=' flex justify-center md:justify-end bg-slate-50'>
         <div className='w-full sm:w-4/5  flex justify-center lg:justify-start '>
-          
-        {/* <Post/> */}
         <Feed/>
         </div>
         <RightbarUser/>

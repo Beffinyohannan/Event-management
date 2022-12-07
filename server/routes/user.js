@@ -1,4 +1,4 @@
-const { login, signup, viewCompanies, viewPosts, likePost, commentPost, uncommentPost, viewComments, follow, getProfile, eventEnquire, inboxView, cancelEnquiry } = require('../controller/userController')
+const { login, signup, viewCompanies, viewPosts, likePost, commentPost, uncommentPost, viewComments, follow, getProfile, eventEnquire, inboxView, cancelEnquiry, getUserDetail } = require('../controller/userController')
 
 const router = require('express').Router()
 
@@ -18,5 +18,7 @@ router.get('/profile/:id',getProfile)
 router.post('/eventEnquire',eventEnquire)
 router.get('/inbox/:id',inboxView)
 router.put('/cancelEnquiry/:id',cancelEnquiry)
+
+router.get('/userDetail/:id',getUserDetail)
 
 module.exports= router

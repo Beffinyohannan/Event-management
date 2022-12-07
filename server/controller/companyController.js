@@ -177,6 +177,19 @@ const quotation =async(req,res)=>{
 
 }
 
+const getCompany =async(req,res)=>{
+    try {
+        const id = req.params.id
+        // console.log(req.params.id,'.............');
+        const companies = await company.findOne({_id: id });
+        // console.log(companies);
+        res.status(200).json(companies)
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    }
+}
+
 module.exports = {
     companySignup,
     companyLogin,
@@ -186,5 +199,6 @@ module.exports = {
     rejectFrom,
     getCompanyProfile,
     getProfilePost,
-    quotation
+    quotation,
+    getCompany
 }
