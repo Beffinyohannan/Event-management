@@ -2,30 +2,44 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from '../../../api/axios';
 import { CompanyContext } from '../../../Store/CompanyContext';
 import { AiOutlineHeart, AiOutlinePlus, AiFillHeart } from 'react-icons/ai'
-import { FaRegComment, FaRegHeart } from 'react-icons/fa'
+import { FaRegComment, FaRegHeart, FaEllipsisV } from 'react-icons/fa'
 import { FcLike } from "react-icons/fc"
 
 import { FiSend } from 'react-icons/fi'
 import { BsBookmark, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
 import { format } from 'timeago.js'
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-function ProfileCompany() {
+function ProfileCompany({ company }) {
 
     const { companyDetails, setCompanyDetails } = useContext(CompanyContext)
     console.log(companyDetails, 1223123);
-    const companyId = companyDetails._id
+    const companyId = useParams().id
     const [post, setPost] = useState([])
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
     const [showSecondModal, setShowSecondModal] = useState(false)
-    const [state, setState] = useState([])
-    const [showModal, setShowModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false)
     const [modalData, setModalData] = useState({});
+    const [approve, setApprove] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [Image, setImage] = useState("");
+    const [profile, setProfile] = useState({
+        //   username: userData.username,
+        //   bio: userData.bio,
+        //   profilePicture: "",
+        //   phone: userData.phone,
+    });
+
+    const handleOpen = () => {
+        setOpen(!open);
+    };
 
     const showPost = (id) => {
         post.filter((obj) => {
             if (obj._id == id) {
                 setModalData({
-                    name: obj.companyName, description: obj.description, image: obj.image, comments: obj.comments, likes: obj.likes, date: obj.date
+                    id: obj._id, name: obj.companyName, description: obj.description, image: obj.image, comments: obj.comments, likes: obj.likes, date: obj.date
                 })
                 setShowSecondModal(true)
                 console.log(modalData, '///////////////modaldata');
@@ -45,7 +59,71 @@ function ProfileCompany() {
             console.log(post);
             setPost(post.data)
         })
-    }, [])
+    }, [approve])
+
+
+    const handleProfile = (e) => {
+        const { name, value } = e.target;
+        setCompanyDetails({
+            ...companyDetails,
+            [name]: value,
+        });
+
+        console.log(companyDetails);
+    };
+
+    const fileUpload = (e) => {
+        console.log("file upload ann");
+        setImage(URL.createObjectURL(e.target.files[0]));
+
+        setCompanyDetails({
+            ...companyDetails,
+            profilePicture: e.target.files[0],
+        });
+    };
+
+    const handleEdit = (e) => {
+        e.preventDefault()
+        console.log(companyDetails, '77777777777777');
+        const formData = new FormData();
+        for (let key in companyDetails) {
+            formData.append(key, companyDetails[key]);
+        }
+        console.log(formData, '||||||||||||||||||||');
+
+        axios.post(`/company/edit-profile/${companyId}`, formData).then((res) => {
+            if (res.data.Update == true) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Profile Updated sucessfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setShowEditModal(false)
+                setApprove(!approve)
+            }
+        })
+    }
+
+    const handleDelete = (id) => {
+        console.log(id);
+        axios.delete(`/company/delete-post/${id}`).then((res) => {
+            console.log(res.data);
+            if (res.data.deleted == true) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Post deleted sucessfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setShowSecondModal(false)
+                setApprove(!approve)
+
+            }
+        })
+    }
 
 
     return (
@@ -53,7 +131,7 @@ function ProfileCompany() {
 
             <section className="pt-14 md:pt-0 w-full   md:w-4/5">
                 <div className="w-full md:w-10/12 lg:pl-8 xl:pl-0 mx-auto ">
-                    <div className="relative flex flex-col min-w-0 break-words  w-full  mb-6   mt-16">
+                    <div className="relative flex flex-col min-w-0 break-words  w-full  mb-6   mt-20">
                         <div className=" border bg-white shadow-lg rounded-lg ">
                             <div className=" flex  flex-wrap p-2 justify-center  ">
                                 <div className='w-full'>
@@ -63,7 +141,7 @@ function ProfileCompany() {
                                     <div className='flex '>
                                         <div className="w-full px-4 py-3 flex  justify-start">
                                             <div className="relative">
-                                                <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" alt="" className="shadow-xl rounded-full  w-32 sm:w-40 h-32 sm:h-40 align-middle border-none " />
+                                                <img src={"http://localhost:5000/images/" + companyDetails.profilePicture} alt="" className="shadow-xl rounded-full  w-32 sm:w-40 h-32 sm:h-40 align-middle border-none " />
                                                 {/* <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"/> */}
                                             </div >
                                             <div className='ml-5 pt-2 '>
@@ -85,9 +163,11 @@ function ProfileCompany() {
                                             </div>
 
                                         </div>
-                                        <div>
-                                            <button className='m-5 bg-slate-400 rounded-md px-2'>Edit</button>
-                                        </div>
+                                        {company ?
+                                            <div>
+                                                <button className='m-5 bg-slate-400 rounded-md px-2' onClick={() => setShowEditModal(true)}>Edit</button>
+                                            </div>
+                                            : ""}
                                     </div>
                                     <div className="text-start mt-5 pl-5">
                                         <h3 className="text-lg font-semibold leading-normal  text-blueGray-700 mb-2">
@@ -150,13 +230,30 @@ function ProfileCompany() {
                                                                         <div className='flex flex-col items-center '>
                                                                             <div className='flex flex-col   w-full'>
                                                                                 <div className='p-5 bg-white   rounded-t-2xl border-slate-200 border-t shadow-md'>
-                                                                                    <div className='flex items-center space-x-2'>
-                                                                                        <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={40} height={40} alt="" />
-                                                                                        <div>
-                                                                                            {/* <p className='font-medium'>{obj.companyId.companyName}</p> */}
-                                                                                            <p className='font-medium'>{modalData.name}</p>
-                                                                                            <p className='text-xs text-gray-400'>{format(modalData.date)}</p>
+                                                                                    <div className='flex justify-between'>
+                                                                                        <div className='flex items-center space-x-2'>
+
+                                                                                            <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={40} height={40} alt="" />
+                                                                                            <div>
+                                                                                                {/* <p className='font-medium'>{obj.companyId.companyName}</p> */}
+                                                                                                <p className='font-medium'>{modalData.name}</p>
+                                                                                                <p className='text-xs text-gray-400'>{format(modalData.date)}</p>
+                                                                                            </div>
                                                                                         </div>
+                                                                                        {company ?
+                                                                                            <div className='pt-5 '>
+                                                                                                <div className='flex justify-end cursor-pointer'>
+                                                                                                    <FaEllipsisV onClick={handleOpen} />
+                                                                                                </div>
+                                                                                                {open ?
+                                                                                                    <ul className='border shadow-md rounded px-2 mr-6 cursor-pointer'>
+                                                                                                        <li onClick={(e) => { handleDelete(modalData.id) }}>delete</li>
+                                                                                                    </ul>
+                                                                                                    : null}
+                                                                                            </div>
+
+                                                                                            
+                                                                                            : ""}
                                                                                     </div>
                                                                                     <p className='pt-4'>{modalData.description}</p>
                                                                                 </div>
@@ -262,6 +359,113 @@ function ProfileCompany() {
                                                             </div>
                                                         </div>
 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                                        </>
+
+                                    ) : null}
+
+                                    {showEditModal ? (
+                                        <>
+                                            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
+                                                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                                                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                                        <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                                                            {/* {errorMessage && (
+                                                                <div
+                                                                    className="p-2 text-center mb-2 text-sm w-44 text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 mx-auto"
+                                                                    role="alert"
+                                                                >
+                                                                    {" "}
+                                                                    {errorMessage}
+                                                                </div>
+                                                            )} */}
+
+                                                            <h3 className="text-3xl font-semibold">
+                                                                Edit your details
+                                                            </h3>
+                                                            <button
+                                                                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                                                onClick={() => setShowEditModal(false)}
+                                                            >
+                                                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                                                    ×
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                        <div className="relative p-6 flex-auto">
+                                                            <label className="p-2 font-semibold text-blue-400" htmlFor=""> Username:</label>
+                                                            <input
+                                                                type="text"
+                                                                name="companyName"
+                                                                value={companyDetails.companyName}
+                                                                placeholder="Change Username"
+                                                                onChange={handleProfile}
+                                                            />
+                                                            <label className="p-2 font-semibold text-blue-400" htmlFor=""> Profile Picture:</label>
+                                                            <input
+                                                                className="ml-5"
+                                                                type="file"
+                                                                name="profilePicture"
+                                                                id="file"
+                                                                onChange={fileUpload}
+                                                            />
+                                                            <br /> <br />
+                                                            <label className="p-2 font-semibold text-blue-400" htmlFor=""> Contact-No:</label>
+                                                            <input
+                                                                type="number"
+                                                                name="phone"
+                                                                value={companyDetails.phone}
+                                                                placeholder="Contact-No"
+                                                                onChange={handleProfile}
+                                                            />
+                                                            <label className="p-2 font-semibold text-blue-400" htmlFor="" > Email: </label>
+                                                            <input
+                                                                className='w-60'
+                                                                type="email"
+                                                                name="email"
+                                                                value={companyDetails.email}
+                                                                placeholder="Email"
+                                                                onChange={handleProfile}
+                                                            />
+                                                            <br /> <br />
+                                                            <label className="p-2 font-semibold text-blue-400" htmlFor="" > Company Type:</label>
+                                                            <input
+                                                                type="text"
+                                                                name="companyType"
+                                                                value={companyDetails.companyType}
+                                                                placeholder="Company-Type"
+                                                                onChange={handleProfile}
+                                                            />
+                                                            <label className="p-2 font-semibold text-blue-400" htmlFor="" > Company Address:</label>
+                                                            <input
+                                                                type="text"
+                                                                name="companyAddress"
+                                                                value={companyDetails.companyAddress}
+                                                                placeholder="Address"
+                                                                onChange={handleProfile}
+                                                            />
+
+                                                        </div>
+
+                                                        <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                                                            <button
+                                                                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                type="button"
+                                                                onClick={() => setShowEditModal(false)}
+                                                            >
+                                                                Close
+                                                            </button>
+                                                            <button
+                                                                className="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                type="button"
+                                                                onClick={handleEdit}
+                                                            >
+                                                                Save Changes
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

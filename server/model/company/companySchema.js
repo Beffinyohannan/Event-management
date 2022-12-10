@@ -45,6 +45,9 @@ const companySchema = mongoose.Schema({
     followers:{
         type:Array,
         default:[]
+    },
+    profilePicture:{
+        type:String
     }
 })
 

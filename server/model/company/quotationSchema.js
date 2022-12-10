@@ -10,6 +10,8 @@ const QuotaionSchema= mongoose.Schema({
     guestAmount:String,
     cameraAmount:String,
     anchorAmount:String,
+    note:String,
+    username:String,
     companyId:{
         type:String,
         ref:company
@@ -17,6 +19,14 @@ const QuotaionSchema= mongoose.Schema({
     userId:{
         type:String,
         ref:User
+    },
+    status:{
+        type:String,
+        default:"pending"
+    },
+    date:{
+        type:Date,
+        default:Date.now
     }
 })
 

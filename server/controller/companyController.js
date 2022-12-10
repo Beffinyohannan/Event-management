@@ -145,7 +145,7 @@ const getCompanyProfile =async(req,res)=>{
 
 const getProfilePost =async(req,res)=>{
     try {
-        const result = await post.find({companyId: req.params.id})
+        const result = await post.find({companyId: req.params.id}).sort({date:-1})
         res.status(200).json(result) 
     } catch (error) {
         console.log(error.message);
@@ -161,9 +161,9 @@ const quotation =async(req,res)=>{
         // console.log(req.query);
         const userId = req.query.userId
         const companyId = req.query.companyId
-        let { foodAmount,venueAmount,programmeAmount,lightAmount,guestAmount,cameraAmount,anchorAmount } = req.body
+        let { foodAmount,venueAmount,programmeAmount,lightAmount,guestAmount,cameraAmount,anchorAmount,note,username } = req.body
         const eventQuotation = await new Quotation({
-            foodAmount,venueAmount,programmeAmount,lightAmount,guestAmount,cameraAmount,anchorAmount,userId,companyId
+            foodAmount,venueAmount,programmeAmount,lightAmount,guestAmount,cameraAmount,anchorAmount,note,userId,companyId,username
         })
 
         await eventQuotation.save()
@@ -190,6 +190,55 @@ const getCompany =async(req,res)=>{
     }
 }
 
+const deletePost = async(req,res)=>{
+    try {
+        const id = req.params.id
+        const result = await post.deleteOne({_id:id})
+        if(result){
+            res.status(200).json({deleted:true})
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    }
+}
+
+const editProfile=async(req,res)=>{
+    try {
+        console.log(req.params.id);
+        console.log(req.body);
+        const  editCompany = await company.findById(req.params.id)
+        if(editCompany){
+            if(req.file){
+                var file = true
+            }else{
+                var file = false
+            }
+            const edit =  await company.updateOne({_id:req.params.id},
+                {
+                    $set:{
+                        profilePicture:file ? req.file.filename : editCompany.profilePicture,
+                        companyName:req.body.companyName,
+                        email:req.body.email,
+                        phone:req.body.phone,
+                        companyType:req.body.companyType,
+                        companyAddress:req.body.companyAddress
+        
+                    }
+                })
+                if(edit){
+                    res.status(200).json({ Update: true, msg: "Updated Successfully " });
+                }else{
+                    res.status(500).json({ Update: false, msg: "Update not done" });
+                }
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    }
+   
+}
+
 module.exports = {
     companySignup,
     companyLogin,
@@ -200,5 +249,7 @@ module.exports = {
     getCompanyProfile,
     getProfilePost,
     quotation,
-    getCompany
+    getCompany,
+    deletePost,
+    editProfile
 }

@@ -7,13 +7,15 @@ import Sidebar from '../../Components/User/Sidebar/Sidebar'
 function CompaniesListPage() {
   return (
     <div className='flex'>
-        <Header/>
-        <Sidebar/>
-        <div className='md:pl-[350px] pt-3  '>
-        <CompanyList/>
+      <Header />
+      <Sidebar />
+      <div className='w-full flex justify-center  md:justify-end lg:justify-center  pt-3  '>
+        <div className='w-4/5  md:pl-5 md:pr-3  flex justify-center'>
+          <CompanyList />
         </div>
+      </div>
 
-        <BottomNavbar/>
+      <BottomNavbar />
     </div>
   )
 }

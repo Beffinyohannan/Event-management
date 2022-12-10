@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiMenuAlt3, HiOutlineBell, HiOutlineCog, HiOutlineClipboardList, HiOutlineGlobeAlt, HiOutlineTable, HiUserCircle, HiLogout } from 'react-icons/hi'
 import { AiOutlineHome } from 'react-icons/ai'
@@ -8,23 +8,34 @@ import Swal from 'sweetalert2'
 import { useCookies } from 'react-cookie'
 // import '../../../App.css'
 import './sidebar.css'
+import { CompanyContext } from '../../../Store/CompanyContext'
 
 function CompanySidebar() {
+    const { companyDetails, setCompanyDetails } = useContext(CompanyContext)
+     const companyId = companyDetails._id
 
     const Menus = [
         { name: 'Home', link: '/company/homepage', icon: AiOutlineHome },
         { name: 'Inbox', link: '/company/inbox', icon: HiOutlineBell },
         // {name:'Add Post',link:'/companies',icon:HiOutlineGlobeAlt},
-        { name: 'Profile', link: '/company/profile', icon: HiUserCircle },
+        { name: 'Profile', link: `/company/profile/${companyId}`, icon: HiUserCircle },
         { name: 'Settings', link: '#', icon: HiOutlineCog },
         // {name:'Logout',link:'',icon:HiLogout},
         // {name:'Enquire Event',link:'#',icon:HiOutlineClipboardList},
     ]
 
     const [open, setOpen] = useState(true)
+    const [active,setActive]=useState()
+    
+
+    const handleClick=()=>{
+        setActive(current=>!current)
+    }
+
 
     const [cookies, setCookie, removeCookie] = useCookies('');
     const navigate = useNavigate()
+
 
     const logout = (() => {
         console.log('gfdghsfgdfjgjhkj');
@@ -75,15 +86,12 @@ function CompanySidebar() {
             <div className='mt-4 flex flex-col gap-4 relative'>
                 {
                     Menus?.map((menu, i) => (
-                        <Link to={menu?.link} key={i} className="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-200 rounded-md" >
+                        <Link to={menu?.link} key={i} className="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-200 rounded-md" onClick={()=>setActive(i)} >
                             <div>{React.createElement(menu?.icon, { size: "20" })}</div>
                             <h2
                                 style={{ transitionDelay: `${i + 2}00ms`, }}
-                                className={`whitespace-pre duration-500 ${!open && 'opacity-0 translate-x-28 overflow-hidden'} `} >{menu?.name}</h2>
-                            <h2 className={`${open && 'hidden'} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 
-                     w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit `}>
-                                {menu?.name}
-                            </h2>
+                                className={`whitespace-pre duration-500 ${active=== i ? "bg-slate-200":""}  `} >{menu?.name}</h2>
+                            
                         </Link>
                     ))
                 }

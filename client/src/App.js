@@ -26,63 +26,67 @@ import InboxCompanyPage from './Pages/Company/InboxCompanyPage';
 import ProfileCompanyPage from './Pages/Company/ProfileCompanyPage';
 import ChatPage from './Pages/Chat/ChatPage';
 import ChatCompanyPage from './Pages/Chat/ChatCompanyPage';
+import CompanyProfilePage from './Pages/User/CompanyProfilePage';
 
 function App() {
 
 
   return (
 
-   <AuthProvider> 
+    <AuthProvider>
 
 
       <User>
+        <Company>
 
-        <Router>
-          <Routes>
+          <Router>
+            <Routes>
 
-            <Route path='/' element={<LandingPage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/signup' element={<UserSignupPage />} />
-            <Route path='/homepage' element={<HomePage />} />
-            <Route path='/companies' element={<CompaniesListPage />} />
-            <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/enquire-form' element={<EnquireFormPage />} />
-            <Route path='/inbox' element={<InboxPage />} />
-            
-          </Routes>
-          <Company>
+              <Route path='/' element={<LandingPage />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/signup' element={<UserSignupPage />} />
+              <Route path='/homepage' element={<HomePage />} />
+              <Route path='/companies' element={<CompaniesListPage />} />
+              <Route path='/profile' element={<ProfilePage />} />
+              <Route path='/enquire-form' element={<EnquireFormPage />} />
+              <Route path='/inbox' element={<InboxPage />} />
+              <Route path='/profile/company/:id' element={<CompanyProfilePage />} />
+
+            </Routes>
+
 
             <Routes>
               <Route path='/company/signup' element={<CompanySignupPage />} />
               <Route path='/company/login' element={<CompanyLoginPage />} />
               <Route path='/company/homepage' element={<CompanyHomePage />} />
               <Route path='/company/inbox' element={<InboxCompanyPage />} />
-              <Route path='/company/profile' element={<ProfileCompanyPage />} />
+              <Route path='/company/profile/:id' element={<ProfileCompanyPage />} />
               <Route path='/company/chat' element={<ChatCompanyPage />} />
             </Routes>
-          </Company>
 
-          <Routes>
-            <Route path='/admin/login' element={<AdminLoginPage />} />
-          
 
-            <Route path='/admin/dashboard' element={<DashbaordPage />} />
-            <Route path='/admin/users' element={<Userspage />} />
-            <Route path='/admin/companies' element={<CompaniesPage />} />
-            {/* <ProtectedRoute path='/admin/companies' component={<CompaniesPage/>} auth={true} /> */}
-            <Route path='/admin/posts' element={ 
-              // <RequireAuth>
+            <Routes>
+              <Route path='/admin/login' element={<AdminLoginPage />} />
+
+
+              <Route path='/admin/dashboard' element={<DashbaordPage />} />
+              <Route path='/admin/users' element={<Userspage />} />
+              <Route path='/admin/companies' element={<CompaniesPage />} />
+              {/* <ProtectedRoute path='/admin/companies' component={<CompaniesPage/>} auth={true} /> */}
+              <Route path='/admin/posts' element={
+                // <RequireAuth>
                 <PostsPage />
-              //  </RequireAuth>
-             } />
-           
-          </Routes>
+                //  </RequireAuth>
+              } />
 
-          <Routes>
-          <Route path='/chat' element={<ChatPage />} />
+            </Routes>
 
-          </Routes>
-        </Router>
+            <Routes>
+              <Route path='/chat' element={<ChatPage />} />
+
+            </Routes>
+          </Router>
+        </Company>
       </User>
 
     </AuthProvider>

@@ -41,6 +41,16 @@ const postSchema = mongoose.Schema({
             }
 
         }
+    ],
+    reports:[
+        {
+            reason:String,
+            reportedBy:String,
+            date:{
+                type:Date,
+                default:Date.now 
+            }
+        }
     ]
 
     

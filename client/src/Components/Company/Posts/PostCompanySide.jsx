@@ -92,7 +92,7 @@ function PostCompanySide() {
     return (
         <div className=' flex flex-col items-center justify-center mt-16'>
 
-            <div className='flex flex-col   w-3/4 md:w-2/5 '>
+            <div className='flex flex-col   w-3/4 md:w-3/5 lg:w-2/5 md:pl-5 '>
                 <div className='p-5 bg-white  mt-5 rounded-2xl border-slate-200 border-t shadow-md '>
                     <div className='flex items-center space-x-2'>
                         {/* <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full ' width={40} height={40} alt="" /> */}

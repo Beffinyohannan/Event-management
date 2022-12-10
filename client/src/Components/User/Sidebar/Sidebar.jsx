@@ -14,7 +14,7 @@ function Sidebar() {
         { name: 'Inbox', link: '/inbox', icon: HiOutlineBell },
         { name: 'Companies', link: '/companies', icon: HiOutlineGlobeAlt },
         { name: 'Events', link: '#', icon: HiOutlineTable },
-        { name: 'Settings', link: '#', icon: HiOutlineCog },
+        // { name: 'Settings', link: '#', icon: HiOutlineCog },
         { name: 'Enquire Event', link: '/enquire-form', icon: HiOutlineClipboardList },
     ]
 

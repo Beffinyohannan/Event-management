@@ -1,10 +1,10 @@
 const User = require('../model/user/loginSchema');
-const mongoose = require("mongoose")
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
 const company = require('../model/company/companySchema');
 const post = require('../model/company/postSchema');
 const Enquire = require('../model/user/eventEnquire')
+const Quotation = require('../model/company/quotationSchema')
 
 
 /* ------------------------------- user signup ------------------------------ */
@@ -80,8 +80,9 @@ const viewCompanies = (req, res) => {
 /* ------------------------- view post of companies ------------------------- */
 
 const viewPosts = (req, res) => {
-    post.find({ status: true }).sort({ date: -1 }).then((data) => {
-        // console.log(data);
+    console.log(req.params.id);
+    post.find({'reports.reportedBy':{$ne:req.params.id},status:true} ).sort({ date: -1 }).then((data) => {
+        console.log(data,'++++++++++++++');
 
         res.json(data)
     }).catch((err) => {
@@ -123,6 +124,8 @@ const likePost = async (req, res) => {
     }
 }
 
+/* ---------------------------- comment the post ---------------------------- */
+
 const commentPost = async (req, res) => {
     console.log(req.body);
     const comment = {
@@ -146,9 +149,13 @@ const commentPost = async (req, res) => {
     }
 }
 
+/* --------------------------- uncomment the post --------------------------- */
+
 const uncommentPost = (req, res) => {
 
 }
+
+/* ---------------------------- view comment post --------------------------- */
 
 const viewComments = async (req, res) => {
     try {
@@ -159,6 +166,8 @@ const viewComments = async (req, res) => {
         res.json(err.message)
     }
 }
+
+/* --------------------------- follow and unfollow -------------------------- */
 
 const follow = async (req, res) => {
     try {
@@ -187,10 +196,14 @@ const follow = async (req, res) => {
     }
 }
 
+/* ---------------------------- get user profile ---------------------------- */
+
 const getProfile = async (req, res) => {
     const user = await User.findById({ _id: req.params.id })
     res.status(200).json(user)
 }
+
+/* ------------------------ add enquire for the event ----------------------- */
 
 const eventEnquire = async (req, res) => {
     try {
@@ -216,6 +229,8 @@ const eventEnquire = async (req, res) => {
     }
 }
 
+/* -------------------------- view enquiry in inbox ------------------------- */
+
 const inboxView=async(req,res)=>{
     try {
        const msg= await Enquire.find({userId:req.params.id}).populate('companyId')
@@ -225,6 +240,8 @@ const inboxView=async(req,res)=>{
         res.json(err.message) 
     }
 }
+
+/* ------------------------- cancel enquiry in inbox ------------------------ */
 
 const cancelEnquiry =async(req,res)=>{
     try {
@@ -239,6 +256,8 @@ const cancelEnquiry =async(req,res)=>{
     }
 }
 
+/* ---------------------------- get user details ---------------------------- */
+
 const getUserDetail =async(req,res)=>{
     try {
         const id = req.params.id
@@ -246,6 +265,67 @@ const getUserDetail =async(req,res)=>{
         res.status(200).json(user)
     } catch (error) {
         console.log(error.message);
+        res.json(error.message)
+    }
+}
+
+/* ----------------------- get quotation from database ---------------------- */
+
+const getQuotation = async(req,res)=>{
+    try {
+        const id = req.params.id
+        const quotation = await Quotation.find({userId:id}).populate('companyId')
+        res.status(200).json(quotation)
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    }
+}
+
+/* ---------------------------- approve quotation --------------------------- */
+
+const approveQutations = async(req,res)=>{
+    try {
+        const result = await Quotation.findByIdAndUpdate({ _id: req.params.id },{ $set: { status: 'accepted' } })
+        if (result) {
+            res.status(200).json({ update: true })
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    }
+}
+
+/* ---------------------------- reject quotations --------------------------- */
+
+const rejectQutations =async(req,res)=>{
+    try {
+        const result = await Quotation.findByIdAndUpdate({ _id: req.params.id },{ $set: { status: 'rejected' } })
+        if (result) {
+            res.status(200).json({ update: true })
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.json(error.message)
+    } 
+}
+
+/* ----------------------------- report an post ----------------------------- */
+
+const reportPost =async(req,res)=>{
+    try {
+        console.log(req.body);
+        const report ={
+            reason:req.body.reason,
+            reportedBy:req.body.userId
+        }
+       const result = await post.findByIdAndUpdate({_id:req.params.id},
+        {$push:{reports:report}}) 
+        if (result) {
+            console.log('qwertyuiop');
+            res.status(200).json({ report: true })
+        }
+    } catch (error) {
         res.json(error.message)
     }
 }
@@ -264,6 +344,10 @@ module.exports = {
     eventEnquire,
     inboxView,
     cancelEnquiry,
-    getUserDetail
+    getUserDetail,
+    getQuotation,
+    approveQutations,
+    rejectQutations,
+    reportPost
 
 }

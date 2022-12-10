@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from '../../../api/axios'
-import { CompanyContext } from '../../../Store/CompanyContext'
-import InboxDetails from './InboxDetails'
+import { UserContext } from '../../../Store/UserContext'
+import InboxDetails from '../../Company/Inbox/InboxDetails'
 
-function InboxCompany() {
-    const { companyDetails, setCompanyDetails } = useContext(CompanyContext)
-    const companyId = companyDetails._id
+function InboxUser() {
+    const { userDetails, setUserDetails } = useContext(UserContext)
+    const userId = userDetails._id
     const [state, setState] = useState([])
     const [enquire, setEnquire] = useState(true)
     const [rej, setRej] = useState(false)
@@ -27,7 +27,7 @@ function InboxCompany() {
     }
 
     useEffect(() => {
-        axios.get(`/company/inbox/${companyId}`).then((res) => {
+        axios.get(`/inbox/quotations/${userId}`).then((res) => {
             console.log(res.data);
             setState(res.data)
         })
@@ -48,7 +48,7 @@ function InboxCompany() {
                             <div>
                                 {
                                     state.filter(obj => obj.status == 'pending').map((obj, index) => (
-                                        <InboxDetails pending={true} approve={approve} setApprove={setApprove} data={obj} />
+                                        <InboxDetails user={userId} pending={true} approve={approve} setApprove={setApprove} data={obj} />
                                     ))}
                             </div>
                             :
@@ -57,7 +57,7 @@ function InboxCompany() {
                                     {
                                         state.filter(obj => obj.status == 'accepted').map((obj, index) => {
                                             return (
-                                                <InboxDetails approved={true} data={obj} />
+                                                <InboxDetails user={userId} approved={true} data={obj} />
                                             )
                                         })}
                                 </div> :
@@ -65,7 +65,7 @@ function InboxCompany() {
                                     {
                                         state.filter(obj => obj.status == 'rejected').map((obj, index) => {
                                             return (
-                                                <InboxDetails data={obj} />
+                                                <InboxDetails user={userId} data={obj} />
                                             )
                                         })}
                                 </div>
@@ -79,4 +79,4 @@ function InboxCompany() {
     )
 }
 
-export default InboxCompany
+export default InboxUser

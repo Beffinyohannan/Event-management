@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import axios from '../../../api/axios'
 import { UserContext } from '../../../Store/UserContext'
 function RightbarUser(props) {
@@ -47,7 +48,7 @@ function RightbarUser(props) {
                                 <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={32} alt="" />
                             </div>
                             <div className='ml-3'>
-                                <h1 className='text-md font-medium pb-1 cursor-pointer'>{obj.companyName}</h1>
+                                <Link to={`/profile/company/${obj._id}`} className='text-md font-medium pb-1 cursor-pointer'>{obj.companyName}</Link>
                                 {/* <p>description about the companies are  provides here</p> */}
                             </div>
                             </div>

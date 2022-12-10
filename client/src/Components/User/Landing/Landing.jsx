@@ -12,7 +12,7 @@ function Landing() {
                 <Link to={'/login'}>
                     <button type="button"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium m-3
-            rounded-full text-sm px-5 md:text-xl py-1 text-center   dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600 ">
+                          rounded-full text-sm px-5 md:text-xl py-1 text-center   dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600 ">
                         Login  </button></Link>
             </div>
             <div className="items-center max-w-md sm:max-w-2xl sm:mt-6 px-6 py-6 mx-auto grid md:grid-cols-2 md:max-w-3xl md:mt-8 lg:max-w-6xl ">
@@ -28,7 +28,7 @@ function Landing() {
                         <button
                             type="button"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium
-                sm:text-2xl sm:mt-8 rounded-full text-sm px-5 py-2.5 text-center mt-4 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600 lg:mt-10"
+                              sm:text-2xl sm:mt-8 rounded-full text-sm px-5 py-2.5 text-center mt-4 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600 lg:mt-10"
                         >
                             Get Started
                         </button> </Link>
@@ -51,10 +51,10 @@ function Landing() {
                     </p>
                     <Link to={'/company/signup'}>
                         <button
-                          
+
                             type="button"
                             class="text-white  bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium
-                rounded-full float-right text-2xl px-5 py-2.5 text-center mt-10 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600  md:block"
+                              rounded-full float-right text-2xl px-5 py-2.5 text-center mt-10 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600  md:block"
                         >
                             Register Now
                         </button></Link>
@@ -64,31 +64,6 @@ function Landing() {
                 </div>
 
             </div>
-
-
-            {/* <div className="items-center max-w-md sm:max-w-2xl sm:mt-6 px-6 py-6 mx-auto grid md:grid-cols-2 md:max-w-3xl md:mt-8 lg:max-w-6xl">
-
-                <div className="">
-                    <h2 className="font-bold text-blue-500 text-3xl sm:text-5xl">
-                        Find Great Talents!
-                    </h2>
-                    <p className="mt-5 text-lg sm:text-2xl font-medium text-gray-500">
-                        Work with the largest network of independent professionals and get things done
-                    </p>
-                    <Link to={'/create_account'}>
-                        <button
-                            hidden
-                            type="button"
-                            class="text-white  bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium
-                rounded-full  text-2xl px-5 py-2.5 text-center mt-10 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-600  md:block"
-                        >Hire Now
-                        </button></Link>
-                </div>
-                <div>
-                    <img className="sm:mt-4 " src={bg} alt="background" />
-                </div>
-
-            </div> */}
         </div>
     )
 }

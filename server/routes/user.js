@@ -1,11 +1,11 @@
-const { login, signup, viewCompanies, viewPosts, likePost, commentPost, uncommentPost, viewComments, follow, getProfile, eventEnquire, inboxView, cancelEnquiry, getUserDetail } = require('../controller/userController')
+const { login, signup, viewCompanies, viewPosts, likePost, commentPost, uncommentPost, viewComments, follow, getProfile, eventEnquire, inboxView, cancelEnquiry, getUserDetail, getQuotation, approveQutations, rejectQutations, reportPost } = require('../controller/userController')
 
 const router = require('express').Router()
 
 router.post('/signup',signup)
 router.post('/login',login)
 router.get('/view-companies',viewCompanies)
-router.get('/viewPosts',viewPosts)
+router.get('/viewPosts/:id',viewPosts)
 router.put('/post/like/:id',likePost)
 
 router.put('/post/comment/:id',commentPost)
@@ -19,6 +19,11 @@ router.post('/eventEnquire',eventEnquire)
 router.get('/inbox/:id',inboxView)
 router.put('/cancelEnquiry/:id',cancelEnquiry)
 
+router.get('/inbox/quotations/:id',getQuotation)
+router.put('/accept-quotation/:id',approveQutations)
+router.put('/reject-quotation/:id',rejectQutations)
+
 router.get('/userDetail/:id',getUserDetail)
+router.post('/report-post/:id',reportPost)
 
 module.exports= router
