@@ -112,7 +112,7 @@ const unblockCompany = (req, res) => {
 
 const posts = async (req, res) => {
     try {
-        const data = await post.find().sort({date:-1})
+        const data = await post.find().sort({ date: -1 })
         // console.log(data);
         res.json(data)
 
@@ -134,7 +134,7 @@ const blockPost = async (req, res) => {
     }
 }
 
-const unblockPost = async(req, res) => {
+const unblockPost = async (req, res) => {
     try {
         const response = await post.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: true } })
         if (response) {
@@ -142,6 +142,29 @@ const unblockPost = async(req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.json(error.message)
+    }
+}
+
+const postGraphInfo = async (req, res) => {
+    try {
+        const result = await post.aggregate([
+            {
+                $project:{date:{$dateToString:{format: "%Y-%m-%d",date: "$date"}},_id:1}
+            },
+            {
+                $group: {
+                    _id: '$date',
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort:{_id:1}
+            }
+        ])
+        // console.log(result);
+        res.status(200).json(result)
+    } catch (error) {
         res.json(error.message)
     }
 }
@@ -156,5 +179,6 @@ module.exports = {
     unblockCompany,
     posts,
     blockPost,
-    unblockPost
+    unblockPost,
+    postGraphInfo
 }

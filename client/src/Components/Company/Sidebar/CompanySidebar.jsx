@@ -19,7 +19,8 @@ function CompanySidebar() {
         { name: 'Inbox', link: '/company/inbox', icon: HiOutlineBell },
         // {name:'Add Post',link:'/companies',icon:HiOutlineGlobeAlt},
         { name: 'Profile', link: `/company/profile/${companyId}`, icon: HiUserCircle },
-        { name: 'Settings', link: '#', icon: HiOutlineCog },
+        { name: 'Events', link: '/company/events', icon: HiOutlineTable },
+        // { name: 'Settings', link: '#', icon: HiOutlineCog },
         // {name:'Logout',link:'',icon:HiLogout},
         // {name:'Enquire Event',link:'#',icon:HiOutlineClipboardList},
     ]
@@ -49,7 +50,9 @@ function CompanySidebar() {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        removeCookie("company-token")
+                        // removeCookie("company-token")
+                        localStorage.removeItem("company-token")
+                        localStorage.removeItem("company")
                         //    navigate("/admin-login")
                         Swal.fire({
                             position: 'top-end',
@@ -86,8 +89,8 @@ function CompanySidebar() {
             <div className='mt-4 flex flex-col gap-4 relative'>
                 {
                     Menus?.map((menu, i) => (
-                        <Link to={menu?.link} key={i} className="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-200 rounded-md" onClick={()=>setActive(i)} >
-                            <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                        <Link to={menu?.link} key={i} className="group flex items-center text-lg gap-3.5 font-medium p-2 hover:bg-gray-200 rounded-md" onClick={()=>setActive(i)} >
+                            <div>{React.createElement(menu?.icon, { size: "24" })}</div>
                             <h2
                                 style={{ transitionDelay: `${i + 2}00ms`, }}
                                 className={`whitespace-pre duration-500 ${active=== i ? "bg-slate-200":""}  `} >{menu?.name}</h2>

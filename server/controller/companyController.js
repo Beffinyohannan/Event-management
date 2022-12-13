@@ -7,6 +7,7 @@ const company = require("../model/company/companySchema")
 const post = require("../model/company/postSchema")
 const Enquire = require("../model/user/eventEnquire")
 const Quotation = require("../model/company/quotationSchema")
+const Events = require("../model/company/eventSchema")
 
 
 
@@ -79,7 +80,8 @@ const uploadPost = (req, res) => {
         // companyId:mongoose.Types.ObjectId(req.body.companyId),
         companyId: req.body.companyId,
         description: req.body.description,
-        image: req.file.filename
+        eventType:req.body.evntType,
+        image: req.file.filename,
         // contentType:"image/png"
 
     })
@@ -132,44 +134,44 @@ const rejectFrom = async (req, res) => {
     }
 }
 
-const getCompanyProfile =async(req,res)=>{
- try {
-    const result =await company.findById({ _id: req.params.id})
-   res.status(200).json(result) 
- } catch (error) {
-    console.log(error.message);
+const getCompanyProfile = async (req, res) => {
+    try {
+        const result = await company.findById({ _id: req.params.id })
+        res.status(200).json(result)
+    } catch (error) {
+        console.log(error.message);
         res.json(error.message)
- }
+    }
 
 }
 
-const getProfilePost =async(req,res)=>{
+const getProfilePost = async (req, res) => {
     try {
-        const result = await post.find({companyId: req.params.id}).sort({date:-1})
-        res.status(200).json(result) 
+        const result = await post.find({ companyId: req.params.id }).sort({ date: -1 })
+        res.status(200).json(result)
     } catch (error) {
         console.log(error.message);
         res.json(error.message)
     }
 }
 
-const quotation =async(req,res)=>{
-    
-    
+const quotation = async (req, res) => {
+
+
     try {
         // console.log(req.body);
         // console.log(req.query);
         const userId = req.query.userId
         const companyId = req.query.companyId
-        let { foodAmount,venueAmount,programmeAmount,lightAmount,guestAmount,cameraAmount,anchorAmount,note,username } = req.body
+        let { foodAmount, venueAmount, programmeAmount, lightAmount, guestAmount, cameraAmount, anchorAmount, note, username } = req.body
         const eventQuotation = await new Quotation({
-            foodAmount,venueAmount,programmeAmount,lightAmount,guestAmount,cameraAmount,anchorAmount,note,userId,companyId,username
+            foodAmount, venueAmount, programmeAmount, lightAmount, guestAmount, cameraAmount, anchorAmount, note, userId, companyId, username
         })
 
         await eventQuotation.save()
         console.log('success');
         res.status(200).json({ form: 'sended' })
-        
+
     } catch (error) {
         console.log(error.message);
         res.json(error.message)
@@ -177,11 +179,11 @@ const quotation =async(req,res)=>{
 
 }
 
-const getCompany =async(req,res)=>{
+const getCompany = async (req, res) => {
     try {
         const id = req.params.id
         // console.log(req.params.id,'.............');
-        const companies = await company.findOne({_id: id });
+        const companies = await company.findOne({ _id: id });
         // console.log(companies);
         res.status(200).json(companies)
     } catch (error) {
@@ -190,12 +192,12 @@ const getCompany =async(req,res)=>{
     }
 }
 
-const deletePost = async(req,res)=>{
+const deletePost = async (req, res) => {
     try {
         const id = req.params.id
-        const result = await post.deleteOne({_id:id})
-        if(result){
-            res.status(200).json({deleted:true})
+        const result = await post.deleteOne({ _id: id })
+        if (result) {
+            res.status(200).json({ deleted: true })
         }
     } catch (error) {
         console.log(error.message);
@@ -203,40 +205,109 @@ const deletePost = async(req,res)=>{
     }
 }
 
-const editProfile=async(req,res)=>{
+const editProfile = async (req, res) => {
     try {
         console.log(req.params.id);
         console.log(req.body);
-        const  editCompany = await company.findById(req.params.id)
-        if(editCompany){
-            if(req.file){
+        const editCompany = await company.findById(req.params.id)
+        if (editCompany) {
+            if (req.file) {
                 var file = true
-            }else{
+            } else {
                 var file = false
             }
-            const edit =  await company.updateOne({_id:req.params.id},
+            const edit = await company.updateOne({ _id: req.params.id },
                 {
-                    $set:{
-                        profilePicture:file ? req.file.filename : editCompany.profilePicture,
-                        companyName:req.body.companyName,
-                        email:req.body.email,
-                        phone:req.body.phone,
-                        companyType:req.body.companyType,
-                        companyAddress:req.body.companyAddress
-        
+                    $set: {
+                        profilePicture: file ? req.file.filename : editCompany.profilePicture,
+                        companyName: req.body.companyName,
+                        email: req.body.email,
+                        phone: req.body.phone,
+                        companyType: req.body.companyType,
+                        companyAddress: req.body.companyAddress
+
                     }
                 })
-                if(edit){
-                    res.status(200).json({ Update: true, msg: "Updated Successfully " });
-                }else{
-                    res.status(500).json({ Update: false, msg: "Update not done" });
-                }
+            if (edit) {
+                res.status(200).json({ Update: true, msg: "Updated Successfully " });
+            } else {
+                res.status(500).json({ Update: false, msg: "Update not done" });
+            }
         }
     } catch (error) {
         console.log(error.message);
         res.json(error.message)
     }
-   
+
+}
+
+const postView = async (req, res) => {
+    try {
+        const result = await post.find({ status: true }).sort({ date: -1 })
+        if (result) {
+            res.status(200).json(result)
+        }
+    } catch (error) {
+        res.json(error.message)
+    }
+}
+
+const addEvent = async (req, res) => {
+    // console.log(req.body);
+    // console.log('qwertyu');
+
+    try {
+        const events = new Events({
+            event: req.body.event,
+            description: req.body.description,
+            companyId: req.body.companyId,
+            image: req.file.filename
+        })
+
+        events.save()
+        res.status(200).json({ event: true })
+
+    } catch (error) {
+        res.json(error.message)
+    }
+}
+
+const eventView = async (req, res) => {
+    // console.log('000000000000000');
+    try {
+        const result = await Events.find()
+        //    console.log(result,'ggggggggggggg');
+        if (result) {
+            res.status(200).json(result)
+        }
+    } catch (error) {
+        // console.log(error);
+        res.json(error.message)
+    }
+}
+
+const singleEventPosts = async (req, res) => {
+    console.log(req.params.id, 'qwertyui');
+    try {
+        const result = await post.find({ eventType: req.params.id })
+        // console.log(result);
+        if (result) {
+            res.status(200).json(result)
+        }
+    } catch (error) {
+        res.json(error.message)
+    }
+}
+
+const eventDetails = async (req, res) => {
+    try {
+        const result = await Events.findOne({ _id: req.params.id })
+        if (result) {
+            res.status(200).json(result)
+        }
+    } catch (error) {
+        res.json(error.message)
+    }
 }
 
 module.exports = {
@@ -251,5 +322,10 @@ module.exports = {
     quotation,
     getCompany,
     deletePost,
-    editProfile
+    editProfile,
+    postView,
+    addEvent,
+    eventView,
+    singleEventPosts,
+    eventDetails
 }

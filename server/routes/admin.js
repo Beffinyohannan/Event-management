@@ -1,4 +1,4 @@
-const { AdminLogin, users, blockUser, unblockUser, Companies, blockCompany, unblockCompany, posts, blockPost, unblockPost } = require('../controller/adminController')
+const { AdminLogin, users, blockUser, unblockUser, Companies, blockCompany, unblockCompany, posts, blockPost, unblockPost, postGraphInfo } = require('../controller/adminController')
 const check = require('../middleware/authToken')
 
 const router = require('express').Router()
@@ -15,6 +15,8 @@ router.post('/unblock-company/:id',unblockCompany)
 router.get('/posts',posts)
 router.post('/block-post/:id',blockPost)
 router.post('/unblock-post/:id',unblockPost)
+
+router.get('/postGraphInfo',postGraphInfo)
 
 router.post('/verify',check,(req,res)=>{
     console.log('helooooooooooooo');

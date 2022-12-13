@@ -1,4 +1,4 @@
-import React,{useContext, useEffect,useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from '../../../api/axios'
 import { UserContext } from '../../../Store/UserContext'
 import Header from '../Header/Header'
@@ -9,7 +9,7 @@ function Feed() {
 
   const [posts, setPosts] = useState([])
   const [block, setBlock] = useState('')
-  
+
   const { userDetails, setUserDetails } = useContext(UserContext)
   const userId = userDetails._id
   // console.log(posts,'zxcvbnm,');
@@ -17,22 +17,27 @@ function Feed() {
   useEffect((e) => {
     // console.log('useeffect called');
     axios.get(`/viewPosts/${userId}`).then((response) => {
-        // console.log(response.data);
-        setPosts(response.data)
+      // console.log(response.data);
+      setPosts(response.data)
 
     })
-}, [block])
+  }, [block])
 
 
   return (
     <div className='w-full sm:w-4/5 pt-24 flex flex-col items-center lg:justify-start '>
-      { 
-      posts.map((obj,i)=>(
-        
-        <Post key={obj.companyId} setBlock={setBlock} obj={obj}/>
+      <div className=' sm:w-full  lg:w-10/12  flex flex-col items-center xl:items-start  '>
 
-      ))
-      }
+        <div className='flex flex-col items-center lg:pl-12 xl:pl-0 xl:pr-28'>
+          {
+            posts.map((obj, i) => (
+
+              <Post key={obj.companyId} setBlock={setBlock} obj={obj} />
+
+            ))
+          }
+        </div>
+      </div>
     </div>
   )
 }

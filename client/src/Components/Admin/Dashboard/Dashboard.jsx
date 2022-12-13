@@ -1,10 +1,85 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import { graphPost } from '../../../api/AdminRequest'
 import AdminSidebar from '../AdminSidebar/AdminSidebar'
+import BarChart from './BarChart'
 
 function Dashboard() {
+  const [datas, setDatas] = useState({})
+  useEffect(() => {
+    const graph = async () => {
+      try {
+        const { data } = await graphPost()
+        console.log(data);
+        setDatas({
+          labels: data.map((obj) => obj._id),
+          datasets: [{
+            label: "counts",
+            data: data.map((obj) => obj.count),
+            backgroundColor: ["rgba(75,196,1116,2)"]
+          }]
+        })
+
+        console.log(datas, '*********');
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    graph()
+
+  }, [])
+
   return (
-    <div>
-        <h1>dashbord</h1>
+    <div className='w-full'>
+      <div className='pt-5 '>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10">
+          <div class="overflow-hidden group relative rounded-lg p-[1px] flex justify-center items-center">
+            <div class="rounded-lg hidden group-hover:block animate-gradient w-[250%] h-[500%] absolute -top-[60%] -left-[50%] bg-gradient-to-r from-zinc-900 via-gray-200/40 to-zinc-700 shadow-xl"></div>
+            <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href="">
+              <div class=" sm:pr-8 flex flex-col items-center">
+                <h3 class="text-xl font-bold text-gray-900">
+                  Total posts
+                </h3>
+                <p class="mt-2 text-sm text-gray-500">
+                  203
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="overflow-hidden group relative rounded-lg p-[1px] flex justify-center items-center">
+            <div class="rounded-lg hidden group-hover:block animate-gradient w-[250%] h-[500%] absolute -top-[60%] -left-[50%] bg-gradient-to-r from-zinc-900 via-gray-200/40 to-zinc-700 shadow-xl"></div>
+            <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href="">
+              <div class=" sm:pr-8 flex flex-col items-center">
+                <h3 class="text-xl font-bold text-gray-900">
+                  Total Users
+                </h3>
+                <p class="mt-2 text-sm text-gray-500">
+                  52
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="overflow-hidden group relative rounded-lg p-[1px] flex justify-center items-center">
+            <div class="rounded-lg hidden group-hover:block animate-gradient w-[250%] h-[500%] absolute -top-[60%] -left-[50%] bg-gradient-to-r from-zinc-900 via-gray-200/40 to-zinc-700 shadow-xl"></div>
+            <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href="">
+              <div class=" sm:pr-8 flex flex-col items-center">
+                <h3 class="text-xl font-bold text-gray-900">
+                  Total Companies
+                </h3>
+                <p class="mt-2 text-sm text-gray-500">
+                  68
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+      </div>
+      <div className='w-4/5 pl-10 pt-10'>
+        <h1 className='font-semibold'>Daily Post Count</h1>
+        <BarChart chartData={datas} />
+      </div>
     </div>
   )
 }

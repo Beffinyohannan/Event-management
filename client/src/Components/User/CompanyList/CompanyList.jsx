@@ -37,7 +37,7 @@ function CompanyList() {
 
     return (
         <div className=' mt-28 mb-4  lg:w-3/5 flex flex-col  '>
-            <div class="flex justify-center">
+            <div class="flex justify-center mb-4">
                 <div class="mb-3 xl:w-96">
                     <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
                         <input type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon2"/>
@@ -53,19 +53,19 @@ function CompanyList() {
                 state.map((obj, index) => {
 
                     return (
-                        <div className=' flex justify-between p-1 px-1 mb-3 bg-slate-50  rounded-2xl border-slate-200 border-t shadow-md '>
+                        <div className=' flex justify-between p-1 px-1 mb-3 bg-white  rounded-2xl border-slate-200 border-t shadow-md '>
                             <div className='flex'>
-                                <div className='m-2'>
-                                    <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={70} height={50} alt="" />
+                                <div className='m-2 py-3 px-1'>
+                                    <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={70} height={60} alt="" />
                                 </div>
-                                <div className='ml-2'>
-                                    <Link to={`/profile/company/${obj._id}`} className='text-xl font-medium pb-1 cursor-pointer'>{obj.companyName}</Link>
-                                    <p>{obj.email}</p>
+                                <div className='ml-2 p-1 '>
+                                    <Link to={`/profile/company/${obj._id}`} className='text-md sm:text-xl font-medium pb-1 cursor-pointer'>{obj.companyName}</Link>
+                                    <p >{obj.email}</p>
                                     <p>{obj.companyType}</p>
                                 </div>
                             </div>
-                            <div className='m-2'>
-                                <button className='ml-4  bg-slate-900 text-white px-4 py-0.5 rounded-xl' onClick={(e) => { handleFollow(obj._id) }} > {!obj.followers.includes(userId) ? ' follow ' : 'unfollow'}</button>
+                            <div className='m-2 py-5'>
+                                <button className='ml-4 w-24 bg-slate-900 text-white px-2 py-0.5 rounded-2xl' onClick={(e) => { handleFollow(obj._id) }} > {!obj.followers.includes(userId) ? ' follow ' : 'unfollow'}</button>
                             </div>
                         </div>
                     )

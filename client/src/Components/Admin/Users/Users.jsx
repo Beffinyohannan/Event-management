@@ -3,7 +3,6 @@ import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
-import Auth from '../../../Auth/Auth';
 import { useNavigate } from 'react-router-dom'
 
 function Users() {
@@ -15,27 +14,21 @@ function Users() {
 
     useEffect(() => {
         console.log('useeffect');
-        // Auth().then((response) => {
-        //     console.log(response.data);
-        //     if (response.data.verified) {
 
-                axios.get("http://localhost:5000/admin/users").then((response) => {
-                    // console.log(response.data);
-                    const { data } = response
-                    if (response.data) {
-                        setState(data)
-                        // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
 
-                    }
-                }).catch((error) => {
-                    console.log(error.message);
-                })
+        axios.get("http://localhost:5000/admin/users").then((response) => {
+            // console.log(response.data);
+            const { data } = response
+            if (response.data) {
+                setState(data)
+                // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
 
-        //     } else {
-        //         navigate('/admin/login')
-        //     }
+            }
+        }).catch((error) => {
+            console.log(error.message);
+        })
 
-        // })
+
     }, [block])
 
     const blockUser = (id) => {
@@ -260,7 +253,7 @@ function Users() {
 
                                                             </span>
                                                         </span>
-                                                            :  <span
+                                                            : <span
                                                                 class="relative inline-block px-1  py-1 font-semibold text-slate-900 leading-tight">
                                                                 <span aria-hidden
                                                                     class="absolute inset-0 bg-slate-400 opacity-50 rounded-full"></span>

@@ -4,6 +4,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
 import { format } from 'timeago.js'
+import Moment from 'moment'
 
 
 function Posts() {
@@ -194,6 +195,10 @@ function Posts() {
                     </th>
                     <th
                       class="px-1 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                      Report
+                    </th>
+                    <th
+                      class="px-1 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Status
                     </th>
                     <th
@@ -243,7 +248,13 @@ function Posts() {
                           </td>
                           <td class="px-1 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {obj.date}
+                              {Moment(obj.date).format("MMM Do YY")}
+
+                            </p>
+                          </td>
+                          <td class="px-1 py-5 pl-3 border-b border-gray-200 bg-white text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {obj.reports.length}
 
                             </p>
                           </td>

@@ -13,7 +13,7 @@ function Sidebar() {
         { name: 'Home', link: '/homepage', icon: AiOutlineHome },
         { name: 'Inbox', link: '/inbox', icon: HiOutlineBell },
         { name: 'Companies', link: '/companies', icon: HiOutlineGlobeAlt },
-        { name: 'Events', link: '#', icon: HiOutlineTable },
+        { name: 'Events', link: '/events', icon: HiOutlineTable },
         // { name: 'Settings', link: '#', icon: HiOutlineCog },
         { name: 'Enquire Event', link: '/enquire-form', icon: HiOutlineClipboardList },
     ]
@@ -78,8 +78,8 @@ function Sidebar() {
             <div className='mt-4 flex flex-col gap-4 relative'>
                 {
                     Menus?.map((menu, i) => (
-                        <Link to={menu?.link} key={i} className="group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-200 rounded-md" >
-                            <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                        <Link to={menu?.link} key={i} className="group flex items-center text-sm lg:text-lg gap-3.5 font-medium p-2 hover:bg-gray-200 rounded-md" >
+                            <div>{React.createElement(menu?.icon, { size: "24" })}</div>
                             <h2
                                 style={{ transitionDelay: `${i + 2}00ms`, }}
                                 className={`whitespace-pre duration-500 ${!open && 'opacity-0 translate-x-28 overflow-hidden'} `} >{menu?.name}</h2>

@@ -6,7 +6,7 @@ import Sidebar from '../../Components/User/Sidebar/Sidebar'
 
 function CompaniesListPage() {
   return (
-    <div className='flex'>
+    <div className='flex bg-slate-50 h-screen'>
       <Header />
       <Sidebar />
       <div className='w-full flex justify-center  md:justify-end lg:justify-center  pt-3  '>

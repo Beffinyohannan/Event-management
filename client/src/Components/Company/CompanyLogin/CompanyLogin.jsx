@@ -51,10 +51,11 @@ function CompanyLogin() {
               // JSON.stringify(companies)
                 if (response.data.state=="ok") {
                     // alert("login sucessful")
-                    setCookie('company-token', response.data.data, { path: '/' });
+                    // setCookie('company-token', response.data.data, { path: '/' });
                     // setUserDetails(userr)
                     setCompanyDetails(companies)
                     // console.log(userDetails);
+                    window.localStorage.setItem("company-token",response.data.data)
                    window.localStorage.setItem("company",JSON.stringify(companies))
                     Swal.fire({
                         position: 'top-end',
