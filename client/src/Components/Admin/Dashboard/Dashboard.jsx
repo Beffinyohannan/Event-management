@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { graphPost } from '../../../api/AdminRequest'
+import { companyView, graphPost, userView, viewPostAdmin } from '../../../api/AdminRequest'
 import AdminSidebar from '../AdminSidebar/AdminSidebar'
 import BarChart from './BarChart'
 
 function Dashboard() {
+
   const [datas, setDatas] = useState({})
+  const [post,setPost]= useState([])
+  const [Users,setUsers] = useState([])
+  const [company,setCompany] = useState([])
+
   useEffect(() => {
     const graph = async () => {
       try {
@@ -16,7 +21,9 @@ function Dashboard() {
           datasets: [{
             label: "counts",
             data: data.map((obj) => obj.count),
-            backgroundColor: ["rgba(75,196,1116,2)"]
+            backgroundColor: ["rgba(75,196,1116,2)"],
+            borderColor:"black",
+            borderWidth:2,
           }]
         })
 
@@ -25,9 +32,43 @@ function Dashboard() {
         console.log(error.message);
       }
     }
+
+    const posts = async()=>{
+      try {
+        const{data} =await viewPostAdmin()
+        setPost(data)
+        console.log(post,'??????');
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    const user = async()=>{
+      try {
+        const {data}=await userView()
+        setUsers(data)
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    const company = async()=>{
+      try {
+        const {data} = await companyView()
+        setCompany(data)
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
     graph()
+    posts()
+    user()
+    company()
 
   }, [])
+
+  
 
   return (
     <div className='w-full'>
@@ -40,8 +81,8 @@ function Dashboard() {
                 <h3 class="text-xl font-bold text-gray-900">
                   Total posts
                 </h3>
-                <p class="mt-2 text-sm text-gray-500">
-                  203
+                <p class="mt-2 text-lg font-medium text-gray-500">
+                  {post.length}
                 </p>
               </div>
             </a>
@@ -53,8 +94,8 @@ function Dashboard() {
                 <h3 class="text-xl font-bold text-gray-900">
                   Total Users
                 </h3>
-                <p class="mt-2 text-sm text-gray-500">
-                  52
+                <p class="mt-2 text-lg font-medium text-gray-500">
+                  {Users.length}
                 </p>
               </div>
             </a>
@@ -66,8 +107,8 @@ function Dashboard() {
                 <h3 class="text-xl font-bold text-gray-900">
                   Total Companies
                 </h3>
-                <p class="mt-2 text-sm text-gray-500">
-                  68
+                <p class="mt-2 text-lg font-medium text-gray-500">
+                 {company.length}
                 </p>
               </div>
             </a>
@@ -78,7 +119,7 @@ function Dashboard() {
       </div>
       <div className='w-4/5 pl-10 pt-10'>
         <h1 className='font-semibold'>Daily Post Count</h1>
-        <BarChart chartData={datas} />
+        <BarChart chartData={datas} />/
       </div>
     </div>
   )

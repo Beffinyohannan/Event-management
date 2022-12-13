@@ -3,6 +3,7 @@ import axios from 'axios'
 import {confirmAlert} from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
+import { companyView } from '../../../api/AdminRequest';
 
 function Companies() {
 
@@ -11,17 +12,27 @@ function Companies() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:5000/admin/companies").then((response) => {
-            // console.log(response.data);
-            const { data } = response
-            if (response.data) {
-                setState(data)
-                // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
 
+        const viewCompany=async()=>{
+            try {
+              const {data} =await companyView() 
+              setState(data) 
+            } catch (error) {
+                console.log(error.message);
             }
-        }).catch((error) => {
-            console.log(error.message);
-        })
+        }
+        viewCompany()
+        // axios.get("http://localhost:5000/admin/companies").then((response) => {
+        //     // console.log(response.data);
+        //     const { data } = response
+        //     if (response.data) {
+        //         setState(data)
+        //         // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+
+        //     }
+        // }).catch((error) => {
+        //     console.log(error.message);
+        // })
     },[block])
 
     const blockUser = (id) => {
@@ -146,19 +157,7 @@ function Companies() {
             </div>
 
             <div class="flex items-center justify-between">
-                {/* <div class="flex bg-gray-50 items-center p-2 rounded-md">
-           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
-               fill="currentColor">
-               <path fill-rule="evenodd"
-                   d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                   clip-rule="evenodd" />
-           </svg>
-           <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..." />
-       </div> */}
-                {/* <div class="lg:ml-40 ml-10 space-x-8">
-           <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Report</button>
-           <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Create</button>
-       </div> */}
+               
             </div>
         </div>
         <div>

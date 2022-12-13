@@ -5,6 +5,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
 import { format } from 'timeago.js'
 import Moment from 'moment'
+import { viewPostAdmin } from '../../../api/AdminRequest';
 
 
 function Posts() {
@@ -16,17 +17,26 @@ function Posts() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/posts").then((response) => {
-      // console.log(response.data);
-      const { data } = response
-      if (response.data) {
+    const postView =async()=>{
+      try {
+        const {data} = await viewPostAdmin()
         setState(data)
-        // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-
+      } catch (error) {
+        console.log(error.message);
       }
-    }).catch((error) => {
-      console.log(error.message);
-    })
+    }
+    postView()
+    // axios.get("http://localhost:5000/admin/posts").then((response) => {
+    //   // console.log(response.data);
+    //   const { data } = response
+    //   if (response.data) {
+    //     setState(data)
+    //     // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+
+    //   }
+    // }).catch((error) => {
+    //   console.log(error.message);
+    // })
   }, [block])
 
   const blockUser = (id) => {

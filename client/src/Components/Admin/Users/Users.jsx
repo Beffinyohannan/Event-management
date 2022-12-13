@@ -4,6 +4,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+import { userView } from '../../../api/AdminRequest';
 
 function Users() {
 
@@ -13,20 +14,29 @@ function Users() {
 
 
     useEffect(() => {
-        console.log('useeffect');
 
-
-        axios.get("http://localhost:5000/admin/users").then((response) => {
-            // console.log(response.data);
-            const { data } = response
-            if (response.data) {
-                setState(data)
-                // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-
+        const viewUser=async()=>{
+            try {
+              const {data}=await userView()
+              setState(data)  
+            } catch (error) {
+               console.log(error.message); 
             }
-        }).catch((error) => {
-            console.log(error.message);
-        })
+        }
+
+        viewUser()
+
+        // axios.get("http://localhost:5000/admin/users").then((response) => {
+        //     // console.log(response.data);
+        //     const { data } = response
+        //     if (response.data) {
+        //         setState(data)
+        //         // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+
+        //     }
+        // }).catch((error) => {
+        //     console.log(error.message);
+        // })
 
 
     }, [block])
