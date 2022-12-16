@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../../api/axios';
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
@@ -12,7 +12,7 @@ function Posts() {
 
   const [state, setState] = useState([])
   const [block, setBlock] = useState(false)
-  // const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER
   // console.log(PF,"pfff");
 
 
@@ -26,17 +26,7 @@ function Posts() {
       }
     }
     postView()
-    // axios.get("http://localhost:5000/admin/posts").then((response) => {
-    //   // console.log(response.data);
-    //   const { data } = response
-    //   if (response.data) {
-    //     setState(data)
-    //     // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-
-    //   }
-    // }).catch((error) => {
-    //   console.log(error.message);
-    // })
+    
   }, [block])
 
   const blockUser = (id) => {
@@ -47,7 +37,7 @@ function Posts() {
         {
           label: 'Yes',
           onClick: () => {
-            axios.post("http://localhost:5000/admin/block-post/" + id).then((response) => {
+            axios.post("/admin/block-post/" + id).then((response) => {
               console.log(response, 'reject');
               if (response.status == 200) {
                 console.log(response.data, 'rejjjjjjjjjjjjjj');
@@ -100,7 +90,7 @@ function Posts() {
         {
           label: 'Yes',
           onClick: () => {
-            axios.post("http://localhost:5000/admin/unblock-post/" + id).then((response) => {
+            axios.post("/admin/unblock-post/" + id).then((response) => {
               console.log(response, 'reject');
               if (response.status == 200) {
                 console.log(response.data, 'rejjjjjjjjjjjjjj');
@@ -231,7 +221,7 @@ function Posts() {
 
                               <div class="flex-shrink-0 w-10 h-10">
                                 <img class="w-full h-full rounded-full"
-                                  src={'http://localhost:5000/images/' + obj.image}
+                                  src={PF + obj.image}
                                   alt="" />
                               </div>
                               <div class="ml-3">

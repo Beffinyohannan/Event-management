@@ -2,7 +2,7 @@ import React,{useState,useContext} from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import landingImg from '../../../assets/company.webp'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+import axios from '../../../api/axios'
 import { useCookies } from 'react-cookie';
 import { CompanyContext } from '../../../Store/CompanyContext'
 
@@ -45,7 +45,7 @@ function CompanyLogin() {
         if (Object.keys(errors).length == 0) {
             console.log("hello");
 
-            axios.post('http://localhost:5000/company/login',{...formValues}).then((response)=>{
+            axios.post('/company/login',{...formValues}).then((response)=>{
                 // console.log(response.data.user);
               const   companies=response.data.companies
               // JSON.stringify(companies)
@@ -95,7 +95,7 @@ function CompanyLogin() {
         
         if (!data.password) {
             error.password = "password required"
-        } else if (data.password.length != 6) {
+        } else if (data.password.length !== 6) {
             error.password = "password should be 6 digit"
         }
         

@@ -1,4 +1,4 @@
-const { login, signup, viewCompanies, viewPosts, likePost, commentPost, uncommentPost, viewComments, follow, getProfile, eventEnquire, inboxView, cancelEnquiry, getUserDetail, getQuotation, approveQutations, rejectQutations, reportPost } = require('../controller/userController')
+const { login, signup, viewCompanies, viewPosts, likePost, commentPost, uncommentPost, viewComments, follow, getProfile, eventEnquire, inboxView, cancelEnquiry, getUserDetail, getQuotation, approveQutations, rejectQutations, reportPost, sendUserOtp, resendOtp, verifyOtp } = require('../controller/userController')
 
 const router = require('express').Router()
 
@@ -25,5 +25,11 @@ router.put('/reject-quotation/:id',rejectQutations)
 
 router.get('/userDetail/:id',getUserDetail)
 router.post('/report-post/:id',reportPost)
+
+router.post('/signup/sendOtp',sendUserOtp)
+
+router.post('/signup/otp/resend',resendOtp)
+
+router.post('/singnUp/otp/verify',verifyOtp)
 
 module.exports= router

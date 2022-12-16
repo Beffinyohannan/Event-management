@@ -36,6 +36,9 @@ import EventPage from './Pages/User/EventPage';
 import EventsCompanyPage from './Pages/Company/EventsCompanyPage';
 import SingleEventCompanyPage from './Pages/Company/SingleEventCompanyPage';
 import SingleEventPage from './Pages/User/SingleEventPage';
+import ProfileViewCompanyPage from './Pages/Company/ProfileViewCompanyPage';
+
+
 
 function App() {
 
@@ -80,6 +83,7 @@ function App() {
                 <Route path='/company/homepage' element={<CompanyHomePage />} />
                 <Route path='/company/inbox' element={<InboxCompanyPage />} />
                 <Route path='/company/profile/:id' element={<ProfileCompanyPage />} />
+                <Route path='/company/profile/view/:id' element={<ProfileViewCompanyPage/> } />
                 <Route path='/company/chat' element={<ChatCompanyPage />} />
                 <Route path='/company/events' element={<EventsCompanyPage />} />
                 <Route path='/company/SingleEvents/:id' element={<SingleEventCompanyPage />} />

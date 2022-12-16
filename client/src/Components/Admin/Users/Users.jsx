@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../../api/axios';
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
@@ -26,18 +26,7 @@ function Users() {
 
         viewUser()
 
-        // axios.get("http://localhost:5000/admin/users").then((response) => {
-        //     // console.log(response.data);
-        //     const { data } = response
-        //     if (response.data) {
-        //         setState(data)
-        //         // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-
-        //     }
-        // }).catch((error) => {
-        //     console.log(error.message);
-        // })
-
+     
 
     }, [block])
 
@@ -49,7 +38,7 @@ function Users() {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.post("http://localhost:5000/admin/block-user/" + id).then((response) => {
+                        axios.post("/admin/block-user/" + id).then((response) => {
                             console.log(response, 'reject');
                             if (response.status == 200) {
                                 console.log(response.data, 'rejjjjjjjjjjjjjj');
@@ -102,7 +91,7 @@ function Users() {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        axios.post("http://localhost:5000/admin/unblock-user/" + id).then((response) => {
+                        axios.post("/admin/unblock-user/" + id).then((response) => {
                             console.log(response, 'reject');
                             if (response.status == 200) {
                                 console.log(response.data, 'rejjjjjjjjjjjjjj');

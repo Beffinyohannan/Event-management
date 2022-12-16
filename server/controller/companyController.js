@@ -147,7 +147,7 @@ const getCompanyProfile = async (req, res) => {
 
 const getProfilePost = async (req, res) => {
     try {
-        const result = await post.find({ companyId: req.params.id }).sort({ date: -1 })
+        const result = await post.find({ companyId: req.params.id }).populate('companyId').sort({ date: -1 })
         res.status(200).json(result)
     } catch (error) {
         console.log(error.message);
@@ -243,7 +243,7 @@ const editProfile = async (req, res) => {
 
 const postView = async (req, res) => {
     try {
-        const result = await post.find({ status: true }).sort({ date: -1 })
+        const result = await post.find({ status: true }).populate('companyId').sort({ date: -1 })
         if (result) {
             res.status(200).json(result)
         }

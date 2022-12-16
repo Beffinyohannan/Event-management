@@ -17,6 +17,7 @@ function ProfileCompany({ company }) {
     console.log(companyDetails, 1223123);
     const companyId = useParams().id
     const [post, setPost] = useState([])
+    // console.log(post,'##########');
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
     const [showSecondModal, setShowSecondModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
@@ -39,7 +40,8 @@ function ProfileCompany({ company }) {
         post.filter((obj) => {
             if (obj._id == id) {
                 setModalData({
-                    id: obj._id, name: obj.companyName, description: obj.description, image: obj.image, comments: obj.comments, likes: obj.likes, date: obj.date
+                    id: obj._id, name: obj.companyName, description: obj.description, image: obj.image, comments: obj.comments, likes: obj.likes, date: obj.date,profilePicture:obj.companyId.profilePicture
+                    
                 })
                 setShowSecondModal(true)
                 console.log(modalData, '///////////////modaldata');
@@ -59,7 +61,7 @@ function ProfileCompany({ company }) {
             console.log(post);
             setPost(post.data)
         })
-    }, [approve])
+    }, [approve,companyId])
 
 
     const handleProfile = (e) => {
@@ -89,7 +91,7 @@ function ProfileCompany({ company }) {
         for (let key in companyDetails) {
             formData.append(key, companyDetails[key]);
         }
-        console.log(formData, '||||||||||||||||||||');
+        // console.log(formData, '||||||||||||||||||||');
 
         axios.post(`/company/edit-profile/${companyId}`, formData).then((res) => {
             if (res.data.Update == true) {
@@ -141,7 +143,7 @@ function ProfileCompany({ company }) {
                                     <div className='flex '>
                                         <div className="w-full px-4 py-3 flex  justify-start">
                                             <div className="relative">
-                                                <img src={"http://localhost:5000/images/" + companyDetails.profilePicture} alt="" className="shadow-xl rounded-full  w-32 sm:w-40 h-32 sm:h-40 align-middle border-none " />
+                                                <img src={ PF + companyDetails.profilePicture} alt="" className="shadow-xl rounded-full  w-32 sm:w-40 h-32 sm:h-40 align-middle border-none " />
                                                 {/* <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"/> */}
                                             </div >
                                             <div className='ml-5 pt-2 '>
@@ -202,7 +204,7 @@ function ProfileCompany({ company }) {
                                             {
                                                 post.map((obj, index) => {
                                                     return (
-                                                        <img className='w-64 h-24 sm:h-40' src={'http://localhost:5000/images/' + obj.image} onClick={(e) => { showPost(obj._id) }} />
+                                                        <img className='w-64 h-24 sm:h-40' src={ PF + obj.image} onClick={(e) => { showPost(obj._id) }} />
 
                                                     )
                                                 })
@@ -233,7 +235,7 @@ function ProfileCompany({ company }) {
                                                                                     <div className='flex justify-between'>
                                                                                         <div className='flex items-center space-x-2'>
 
-                                                                                            <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={40} height={40} alt="" />
+                                                                                            <img src={PF + modalData.profilePicture} className='rounded-full' width={40} height={40} alt="" />
                                                                                             <div>
                                                                                                 {/* <p className='font-medium'>{obj.companyId.companyName}</p> */}
                                                                                                 <p className='font-medium'>{modalData.name}</p>
@@ -258,7 +260,7 @@ function ProfileCompany({ company }) {
                                                                                     <p className='pt-4'>{modalData.description}</p>
                                                                                 </div>
                                                                                 <div className='relative w-full   bg-white '>
-                                                                                    <img className='object w-[800px] h-[300px]' src={'http://localhost:5000/images/' + modalData.image} alt="" />
+                                                                                    <img className='object w-[800px] h-[300px]' src={ PF + modalData.image} alt="" />
                                                                                 </div>
 
                                                                                 <div className='flex justify-between rounded-b-2xl items-center  bg-white  text-gray-400 border-t '>

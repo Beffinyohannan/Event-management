@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import axios from 'axios';
+import axios from '../../../api/axios';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { HiPhotograph } from "react-icons/hi";
@@ -69,7 +69,7 @@ function PostCompanySide() {
                 'content-type': 'multipart/form-data',
             }
         }
-        axios.post('http://localhost:5000/company/post-upload', formData).then((response) => {
+        axios.post('/company/post-upload', formData).then((response) => {
             console.log('image added');
             console.log(response.data);
             if (response.data.posted == true) {

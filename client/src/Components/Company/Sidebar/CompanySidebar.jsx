@@ -13,6 +13,7 @@ import { CompanyContext } from '../../../Store/CompanyContext'
 function CompanySidebar() {
     const { companyDetails, setCompanyDetails } = useContext(CompanyContext)
      const companyId = companyDetails._id
+     console.log(companyId);
 
     const Menus = [
         { name: 'Home', link: '/company/homepage', icon: AiOutlineHome },

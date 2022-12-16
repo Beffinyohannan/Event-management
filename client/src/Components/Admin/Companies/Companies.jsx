@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import axios from 'axios'
+import axios from '../../../api/axios';
 import {confirmAlert} from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
@@ -22,17 +22,7 @@ function Companies() {
             }
         }
         viewCompany()
-        // axios.get("http://localhost:5000/admin/companies").then((response) => {
-        //     // console.log(response.data);
-        //     const { data } = response
-        //     if (response.data) {
-        //         setState(data)
-        //         // console.log(state, 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-
-        //     }
-        // }).catch((error) => {
-        //     console.log(error.message);
-        // })
+       
     },[block])
 
     const blockUser = (id) => {
@@ -43,7 +33,7 @@ function Companies() {
               {
                   label: 'Yes',
                   onClick: () => {
-                      axios.post("http://localhost:5000/admin/block-company/" + id).then((response) => {
+                      axios.post("/admin/block-company/" + id).then((response) => {
                           console.log(response, 'reject');
                           if (response.status == 200) {
                               console.log(response.data, 'rejjjjjjjjjjjjjj');
@@ -96,7 +86,7 @@ function Companies() {
               {
                   label: 'Yes',
                   onClick: () => {
-                      axios.post("http://localhost:5000/admin/unblock-company/" + id).then((response) => {
+                      axios.post("/admin/unblock-company/" + id).then((response) => {
                           console.log(response, 'reject');
                           if (response.status == 200) {
                               console.log(response.data, 'rejjjjjjjjjjjjjj');

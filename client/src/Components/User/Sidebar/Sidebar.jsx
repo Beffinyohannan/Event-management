@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, {  useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiMenuAlt3, HiOutlineBell, HiOutlineCog, HiOutlineClipboardList, HiOutlineGlobeAlt, HiOutlineTable } from 'react-icons/hi'
 import { AiOutlineHome } from 'react-icons/ai'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
-import { useCookies } from 'react-cookie'
-import { UserContext } from '../../../Store/UserContext'
+// import { UserContext } from '../../../Store/UserContext'
 
 function Sidebar() {
     const Menus = [
@@ -20,9 +19,8 @@ function Sidebar() {
 
     const [open, setOpen] = useState(true)
 
-    const [cookies, setCookie, removeCookie] = useCookies('');
     const navigate = useNavigate()
-    const {userDetails,setUserDetails}=useContext(UserContext)
+    // const { setUserDetails } = useContext(UserContext)
 
 
 
@@ -38,7 +36,6 @@ function Sidebar() {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        removeCookie("token")
                         localStorage.removeItem('token')
                         localStorage.removeItem('user')
                         // setUserDetails('')

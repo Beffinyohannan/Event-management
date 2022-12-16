@@ -2,8 +2,7 @@ import React,{useState} from 'react'
 import landingImg from '../../../assets/admin.webp'
 import Swal from 'sweetalert2'
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import axios from '../../../api/axios'
 import { useAuth } from '../../../Store/AuthContext';
 
 import { useAuthContext } from '../../../hooks/useAuthContext';
@@ -20,7 +19,6 @@ function AdminLogin() {
     // const {dispatch} = useAuthContext()
 
 
-    const [cookies, setCookie] = useCookies(['admin']);
 
     const [error, setError] = useState({});
 
@@ -50,11 +48,10 @@ function AdminLogin() {
             console.log("hello");
             auth.login(signupData)
 
-            axios.post('http://localhost:5000/admin/login', { ...formValues }).then((response) => {
+            axios.post('/admin/login', { ...formValues }).then((response) => {
                 console.log(response);
                 if (response.data.state == "ok") {
                     // alert("login sucessful")
-                    setCookie('admin-token', response.data.data, { path: '/' });
                      window.localStorage.setItem("admin-token",response.data.data)
 
                     //  dispatch({type:'LOGIN',payload:response.data.data})

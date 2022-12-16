@@ -37,7 +37,7 @@ function Dashboard() {
       try {
         const{data} =await viewPostAdmin()
         setPost(data)
-        console.log(post,'??????');
+        // console.log(post,'??????');
       } catch (error) {
         console.log(error.message);
       }
@@ -76,7 +76,7 @@ function Dashboard() {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 px-10">
           <div class="overflow-hidden group relative rounded-lg p-[1px] flex justify-center items-center">
             <div class="rounded-lg hidden group-hover:block animate-gradient w-[250%] h-[500%] absolute -top-[60%] -left-[50%] bg-gradient-to-r from-zinc-900 via-gray-200/40 to-zinc-700 shadow-xl"></div>
-            <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href="">
+            {/* <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href=""> */}
               <div class=" sm:pr-8 flex flex-col items-center">
                 <h3 class="text-xl font-bold text-gray-900">
                   Total posts
@@ -85,11 +85,11 @@ function Dashboard() {
                   {post.length}
                 </p>
               </div>
-            </a>
+            {/* </a> */}
           </div>
           <div class="overflow-hidden group relative rounded-lg p-[1px] flex justify-center items-center">
             <div class="rounded-lg hidden group-hover:block animate-gradient w-[250%] h-[500%] absolute -top-[60%] -left-[50%] bg-gradient-to-r from-zinc-900 via-gray-200/40 to-zinc-700 shadow-xl"></div>
-            <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href="">
+            {/* <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href=""> */}
               <div class=" sm:pr-8 flex flex-col items-center">
                 <h3 class="text-xl font-bold text-gray-900">
                   Total Users
@@ -98,11 +98,11 @@ function Dashboard() {
                   {Users.length}
                 </p>
               </div>
-            </a>
+            {/* </a> */}
           </div>
           <div class="overflow-hidden group relative rounded-lg p-[1px] flex justify-center items-center">
             <div class="rounded-lg hidden group-hover:block animate-gradient w-[250%] h-[500%] absolute -top-[60%] -left-[50%] bg-gradient-to-r from-zinc-900 via-gray-200/40 to-zinc-700 shadow-xl"></div>
-            <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href="">
+            {/* <a class="block w-full relative z-10 rounded-lg bg-white p-6 sm:p-8" href=""> */}
               <div class=" sm:pr-8 flex flex-col items-center">
                 <h3 class="text-xl font-bold text-gray-900">
                   Total Companies
@@ -111,7 +111,7 @@ function Dashboard() {
                  {company.length}
                 </p>
               </div>
-            </a>
+            {/* </a> */}
           </div>
         </div>
 
@@ -119,7 +119,7 @@ function Dashboard() {
       </div>
       <div className='w-4/5 pl-10 pt-10'>
         <h1 className='font-semibold'>Daily Post Count</h1>
-        <BarChart chartData={datas} />/
+        <BarChart chartData={datas} />
       </div>
     </div>
   )

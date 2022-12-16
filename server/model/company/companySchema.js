@@ -47,7 +47,8 @@ const companySchema = mongoose.Schema({
         default:[]
     },
     profilePicture:{
-        type:String
+        type:String,
+        default:'1671166312226--default-profile-picture1-768x768.webp'
     }
 })
 

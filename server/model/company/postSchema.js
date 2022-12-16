@@ -8,7 +8,7 @@ const postSchema = mongoose.Schema({
     companyName:String,
     companyId:{
         type:mongoose.Schema.Types.ObjectId,
-        // ref:Company
+        ref:Company
     },
     description:String,
     image:String,

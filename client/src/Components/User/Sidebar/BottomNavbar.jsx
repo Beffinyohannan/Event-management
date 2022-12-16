@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {HiMenuAlt3,HiOutlineBell,HiOutlineCog,HiOutlineClipboardList,HiOutlineGlobeAlt,HiOutlineTable} from 'react-icons/hi'
+import {HiOutlineBell,HiOutlineCog,HiOutlineClipboardList,HiOutlineGlobeAlt,HiOutlineTable} from 'react-icons/hi'
 import {AiOutlineHome} from 'react-icons/ai'
 
 function BottomNavbar() {
 
     const Menus=[
-        {name:'Settings',link:'#',icon:HiOutlineCog,dis:"translate-x-64"},
+        // {name:'Settings',link:'#',icon:HiOutlineCog,dis:"translate-x-64"},
         {name:'Enquire',link:'/enquire-form',icon:HiOutlineClipboardList,dis:"translate-x-82"},
         {name:'Company',link:'/companies',icon:HiOutlineGlobeAlt,dis:"translate-x-32"},
         {name:'Home',link:'/homepage',icon:AiOutlineHome,dis:"translate-x-0"},
-        {name:'Events',link:'#',icon:HiOutlineTable,dis:"translate-x-48"},
+        {name:'Events',link:'/events',icon:HiOutlineTable,dis:"translate-x-48"},
         {name:'Notification',link:'/inbox',icon:HiOutlineBell,dis:"translate-x-16"},
     ]
 

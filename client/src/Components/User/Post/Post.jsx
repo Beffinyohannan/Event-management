@@ -15,15 +15,16 @@ import { reportUserPost } from '../../../api/UserRequest'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Post({ obj, setBlock, company }) {
+function Post({ obj, setBlock, company, user }) {
 
     const [likes, setlikes] = useState(false)
     const [count, setCount] = useState(obj.likes.length)
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
     console.log(PF, 'asdfghjxcvbnmwertyui');
-    const { userDetails, setUserDetails } = useContext(UserContext)
-    console.log(userDetails, '00000000000000');
-    const userId = userDetails._id
+    // const { userDetails, setUserDetails } = useContext(UserContext)
+    console.log(user, '00000000000000');
+    
+    const userId = user
     const [comment, setComment] = useState('')
     const [viewComment, setViewComment] = useState(false)
     const [viewAllComment, setViewAllComment] = useState('')
@@ -149,10 +150,13 @@ function Post({ obj, setBlock, company }) {
             <div className='p-5 bg-white   rounded-t-2xl border-slate-200 border-t shadow-md'>
                 <div className='flex justify-between'>
                     <div className='flex items-center space-x-2'>
-                        <img src="https://imgs.search.brave.com/JC3yuRG8o8d2G-kk-gDv7DrSKVLLPa5QoIK2uoMr9QE/rs:fit:641:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5V/enVZTVhkQjNEUFVu/UE9ld2hha0N3SGFG/ZSZwaWQ9QXBp" className='rounded-full' width={40} height={40} alt="" />
+                        <img src={PF + obj.companyId.profilePicture} className='rounded-full' width={40} height={40} alt="" />
                         <div>
                             {/* <p className='font-medium'>{obj.companyId.companyName}</p> */}
-                            <Link to={`/profile/company/${obj.companyId}`} className='font-medium'>{obj.companyName}</Link>
+                            {company?
+                            <Link  to={`/company/profile/view/${obj.companyId._id}`} className='font-medium'>{obj.companyName}</Link>:
+                            <Link  to={`/profile/company/${obj.companyId._id}`} className='font-medium'>{obj.companyName}</Link>
+                            }
                             <p className='text-xs text-gray-400'>{format(obj.date)}</p>
                         </div>
                     </div>

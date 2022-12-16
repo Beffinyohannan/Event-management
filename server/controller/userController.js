@@ -5,28 +5,167 @@ const company = require('../model/company/companySchema');
 const post = require('../model/company/postSchema');
 const Enquire = require('../model/user/eventEnquire')
 const Quotation = require('../model/company/quotationSchema')
+const nodemailer = require("nodemailer")
+const userVerification = require('../model/user/userVerficationSchema')
 
 
 /* ------------------------------- user signup ------------------------------ */
 
 const signup = async (req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         let { username, email, phone, password } = req.body
-        password = await bcrypt.hash(password, 10)
 
-        const user = await new User({
-            username,
-            email,
-            phone,
-            password
-        })
-        await user.save()
-        res.status(200).json({ res: user })
+        const data = await User.findOne({ email: email })
+        console.log(data);
+        if (data) {
+            res.status(200).json("User Already Exist")
+        } else {
+
+            password = await bcrypt.hash(password, 10)
+            const user = await new User({
+                username,
+                email,
+                phone,
+                password
+            })
+            await user.save()
+            res.status(200).json('Signup Sucess')
+        }
+
 
     } catch (error) {
         console.log(error.message);
         res.json(error.message)
+    }
+}
+
+/* ----------------------------- SiGN UP OTP SEND----------------------------- */
+
+
+
+const sendUserOtp = async (req, res) => {
+
+    console.log(req.body, "otp resultsssssssssssssssss")
+    const { email, username } = req.body
+
+
+    try {
+        const usedData = await User.findOne({ $or: [{ email }, { username }] })
+        const comData = await company.findOne({ $or: [{ email }, { companyName:username }] })
+        if (usedData) {
+            console.log('1');
+            if (usedData.username === username) {
+                console.log('2');
+                res.json({ message: "userName not Available" })
+            } else if (usedData.email === email) {
+                console.log('3');
+                res.json({ message: "Email already Registered, Please Login" })
+            }
+        }else if(comData){
+            console.log('4');
+            if (comData.companyName === username) {
+                console.log('5');
+                res.json({ message: "userName not Available" })
+            } else if (comData.email === email) {
+                console.log('6');
+                res.json({ message: "Email already Registered, Please Login" })
+            }
+        } else {
+            otpGenerate(email, res).then((response) => {
+                console.log(response, 'i');
+            })
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
+}
+
+/* ------------------------- OTP GENERATE  FUNCTION ------------------------- */
+
+// Nodemailer configuration
+
+let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.NODEMAILER,
+        pass: process.env.NODEMAILER_PASS,
+    },
+})
+
+const otpGenerate = async (email, res) => {
+    try {
+        const OTP = await Math.floor(100000 + Math.random() * 900000).toString()
+        console.log(OTP)
+
+        const hashOtp = await bcrypt.hash(OTP, 10)
+        const user = await userVerification.findOne({ user: email })
+        if (!user) {
+            const data = new userVerification({
+                user: email,
+                otp: hashOtp,
+                created: Date.now(),
+                Expiry: Date.now() + 100000
+            })
+            await data.save()
+        } else {
+            await userVerification.updateOne({ user: email }, { otp: hashOtp })
+        }
+
+
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+            from: process.env.NODEMAILER, // sender address
+            to: email, // list of receivers
+            subject: "One Time Password for Eventive Events", // Subject line
+            text: `Hello User Your six digit OTP for authentication is ${OTP} `, // plain text body
+            html: `<p>Hello User Your six digit OTP for authentication is <b>${OTP}</b></p>`, // html body
+        })
+
+        if (info.messageId) {
+            console.log('in ifffffff');
+            res.status(200).json({ status: true, message: 'Otp send to mail' })
+        } else {
+            console.log('in elllseeee');
+            res.status(402).json('something went wrong')
+        }
+
+
+    } catch (error) {
+        console.log(error, 'send otp error');
+        res.status(500).json(error)
+    }
+}
+
+/* ------------------------------- RESEND OTP ------------------------------- */
+
+const resendOtp = (req, res) => {
+    console.log(req.body, 'jjkkkbodtyyyy');
+    otpGenerate(req.body.email, res).then((response) => {
+        console.log(response, 'its me ');
+    })
+}
+
+
+/* ---------------------------- OTP VERIFICATION ---------------------------- */
+
+const verifyOtp = async (req, res) => {
+    console.log(req.body, 'verify body');
+    try {
+        let validUser = await userVerification.findOne({ user: req?.body?.email })
+        console.log(validUser, 'valid user');
+        let validOtp = await bcrypt.compare(req.body.otp, validUser.otp)
+        console.log(validOtp, 'otp validd');
+
+        if (validOtp) {
+            res.status(200).json({ message: 'otp verified', auth: true })
+        } else {
+            res.status(403).json({ message: 'invalid Otp' })
+        }
+    } catch (error) {
+        console.log(error, 'verify otp error');
+        res.status(500).json(error)
     }
 }
 
@@ -81,8 +220,8 @@ const viewCompanies = (req, res) => {
 
 const viewPosts = (req, res) => {
     console.log(req.params.id);
-    post.find({'reports.reportedBy':{$ne:req.params.id},status:true} ).sort({ date: -1 }).then((data) => {
-        console.log(data,'++++++++++++++');
+    post.find({ 'reports.reportedBy': { $ne: req.params.id }, status: true }).populate('companyId').sort({ date: -1 }).then((data) => {
+        console.log(data, '++++++++++++++');
 
         res.json(data)
     }).catch((err) => {
@@ -209,16 +348,16 @@ const eventEnquire = async (req, res) => {
     try {
         console.log(req.query);
         console.log(req.body);
-       
+
         const companyId = req.body.com
-        console.log(companyId,'///////////////');
-        
-       
-        let { name, email, phone,eventDate,guestNumber,budget,eventType,address,food,venue,programme,light,guest,camera,anchor,other,notes } = req.body
+        console.log(companyId, '///////////////');
+
+
+        let { name, email, phone, eventDate, guestNumber, budget, eventType, address, food, venue, programme, light, guest, camera, anchor, other, notes } = req.body
         const userId = req.query.userId
         // const companyId = req.query.companyId
         const eventEnquire = await new Enquire({
-            name, email, phone,eventDate,guestNumber,budget,eventType,address,food,venue,programme,light,guest,camera,anchor,other,notes,userId,companyId
+            name, email, phone, eventDate, guestNumber, budget, eventType, address, food, venue, programme, light, guest, camera, anchor, other, notes, userId, companyId
         })
         await eventEnquire.save()
         console.log('success');
@@ -231,19 +370,19 @@ const eventEnquire = async (req, res) => {
 
 /* -------------------------- view enquiry in inbox ------------------------- */
 
-const inboxView=async(req,res)=>{
+const inboxView = async (req, res) => {
     try {
-       const msg= await Enquire.find({userId:req.params.id}).populate('companyId')
-       res.status(200).json(msg)
+        const msg = await Enquire.find({ userId: req.params.id }).populate('companyId')
+        res.status(200).json(msg)
     } catch (err) {
         console.log(err.message);
-        res.json(err.message) 
+        res.json(err.message)
     }
 }
 
 /* ------------------------- cancel enquiry in inbox ------------------------ */
 
-const cancelEnquiry =async(req,res)=>{
+const cancelEnquiry = async (req, res) => {
     try {
         const result = await Enquire.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: 'cancelled' } })
         if (result) {
@@ -258,10 +397,10 @@ const cancelEnquiry =async(req,res)=>{
 
 /* ---------------------------- get user details ---------------------------- */
 
-const getUserDetail =async(req,res)=>{
+const getUserDetail = async (req, res) => {
     try {
         const id = req.params.id
-        const user = await User.findOne({_id:id})
+        const user = await User.findOne({ _id: id })
         res.status(200).json(user)
     } catch (error) {
         console.log(error.message);
@@ -271,10 +410,10 @@ const getUserDetail =async(req,res)=>{
 
 /* ----------------------- get quotation from database ---------------------- */
 
-const getQuotation = async(req,res)=>{
+const getQuotation = async (req, res) => {
     try {
         const id = req.params.id
-        const quotation = await Quotation.find({userId:id}).populate('companyId')
+        const quotation = await Quotation.find({ userId: id }).populate('companyId')
         res.status(200).json(quotation)
     } catch (error) {
         console.log(error.message);
@@ -284,9 +423,9 @@ const getQuotation = async(req,res)=>{
 
 /* ---------------------------- approve quotation --------------------------- */
 
-const approveQutations = async(req,res)=>{
+const approveQutations = async (req, res) => {
     try {
-        const result = await Quotation.findByIdAndUpdate({ _id: req.params.id },{ $set: { status: 'accepted' } })
+        const result = await Quotation.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: 'accepted' } })
         if (result) {
             res.status(200).json({ update: true })
         }
@@ -298,29 +437,29 @@ const approveQutations = async(req,res)=>{
 
 /* ---------------------------- reject quotations --------------------------- */
 
-const rejectQutations =async(req,res)=>{
+const rejectQutations = async (req, res) => {
     try {
-        const result = await Quotation.findByIdAndUpdate({ _id: req.params.id },{ $set: { status: 'rejected' } })
+        const result = await Quotation.findByIdAndUpdate({ _id: req.params.id }, { $set: { status: 'rejected' } })
         if (result) {
             res.status(200).json({ update: true })
         }
     } catch (error) {
         console.log(error.message);
         res.json(error.message)
-    } 
+    }
 }
 
 /* ----------------------------- report an post ----------------------------- */
 
-const reportPost =async(req,res)=>{
+const reportPost = async (req, res) => {
     try {
         console.log(req.body);
-        const report ={
-            reason:req.body.reason,
-            reportedBy:req.body.userId
+        const report = {
+            reason: req.body.reason,
+            reportedBy: req.body.userId
         }
-       const result = await post.findByIdAndUpdate({_id:req.params.id},
-        {$push:{reports:report}}) 
+        const result = await post.findByIdAndUpdate({ _id: req.params.id },
+            { $push: { reports: report } })
         if (result) {
             console.log('qwertyuiop');
             res.status(200).json({ report: true })
@@ -332,6 +471,9 @@ const reportPost =async(req,res)=>{
 
 module.exports = {
     signup,
+    sendUserOtp,
+    resendOtp,
+    verifyOtp,
     login,
     viewCompanies,
     viewPosts,

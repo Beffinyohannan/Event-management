@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { HiMenuAlt3, HiOutlineBell, HiOutlineCog, HiOutlineClipboardList, HiOutlineGlobeAlt, HiOutlineTable, HiUserCircle } from 'react-icons/hi'
 import { AiOutlineHome } from 'react-icons/ai'
-
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Swal from 'sweetalert2'
-import { useCookies } from 'react-cookie'
 import { useAuth } from '../../../Store/AuthContext'
 
 function AdminSidebar() {
@@ -22,7 +20,6 @@ function AdminSidebar() {
 
     const [open, setOpen] = useState(true)
     const navigate = useNavigate()
-    const [cookies, setCookie, removeCookie] = useCookies('');
    const auth = useAuth()
 
 
@@ -41,7 +38,6 @@ function AdminSidebar() {
                     label: 'Yes',
                     onClick: () => {
                         auth.logout()
-                        removeCookie("admin-token")
                         window.localStorage.removeItem('admin-token')
                         //    navigate("/admin-login")
                         Swal.fire({
